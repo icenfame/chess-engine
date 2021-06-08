@@ -47,6 +47,19 @@ public:
 				moves.push_back(Point{ this->x - 1, this->y + 1 });
 			}
 		}
+		
+		//castling
+		if (this->moved == false && board[this->y][this->x + 3]->moved == false && board[this->y][this->x + 3]->type == 'r') {
+			if (board[this->y][this->x + 1]->type == '0' && board[this->y][this->x + 2]->type == '0') {
+				moves.push_back(Point{ this->x + 2, this->y});
+			}
+		}
+
+		if (this->moved == false && board[this->y][this->x - 4]->moved == false && board[this->y][this->x - 4]->type == 'r') {
+			if (board[this->y][this->x - 1]->type == '0' && board[this->y][this->x - 2]->type == '0' && board[this->y][this->x - 3]->type == '0') {
+				moves.push_back(Point{ this->x - 2, this->y});
+			}
+		}
 
 		for (int i = 0; i < moves.size(); i++) {
 			if (this->white) {
