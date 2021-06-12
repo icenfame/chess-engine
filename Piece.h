@@ -7,6 +7,7 @@ bool uniquepred(const Point& p1, const Point& p2) {
 }
 
 class Piece;
+void generateBoardMoves();
 
 Piece* board[8][8];
 
@@ -39,6 +40,7 @@ public:
 	}
 
 	virtual void generateMoves() {}
+	virtual void ifCheck() {}
 
 	void move(Point to) {
 		if (this->white == whitePlay) {
@@ -62,22 +64,82 @@ public:
 						}
 					}
 
-					for (int i = 0; i < 8; i++) {
-						for (int j = 0; j < 8; j++) {
-							board[i][j]->generateMoves();
-						}
-					}
+					generateBoardMoves();
 
 					whitePlay = !whitePlay;
-
-					/*if (whitePlay)
-						cout << "whitePlay" << endl;
-					else
-						cout << "blackPlay" << endl;*/
 
 					break;
 				}
 			}
 		}
+	}
+
+	void customMove(Point to) {
+		int prev_x = this->x;
+		int prev_y = this->y;
+
+		this->x = to.x;
+		this->y = to.y;
+
+		board[to.y][to.x] = board[prev_y][prev_x];
+		board[prev_y][prev_x] = new Piece('0');
+
+		//generateBoardMoves();
+
+		for (int i = 0; i < 8; i++) {
+			for (int j = 0; j < 8; j++) {
+				w_moves[i][j] = 0;
+				b_moves[i][j] = 0;
+			}
+		}
+
+		/*for (int i = 0; i < 8; i++) {
+			for (int j = 0; j < 8; j++) {
+				if (i != prev_y && j != prev_x) {
+					board[i][j]->generateMoves();
+				}
+			}
+		}*/
+
+		generateBoardMoves();
+
+	}
+
+	void moveCheck() {
+		auto prevMove = Point{ this->x, this->y };
+
+		//vector<Point> escapeCheckMoves;
+
+		for (int i = 0; i < this->moves.size(); i++) {
+			cout << this->moves[i].x << "  " << this->moves[i].y << endl;
+
+			if (board[this->moves[i].y][this->moves[i].x]->type == '0') {
+				//cout << "PAWN\n";
+				//this->customMove(Point{ this->moves[i].x, this->moves[i].y });
+				board[this->y][this->x]->move(Point{ this->moves[i].x, this->moves[i].y });
+				this->moved = false;
+
+				whitePlay = this->white;
+
+				//board[this->moves[i].y][this->moves[i].x]->move(Point{ prevMove.x, prevMove.y });
+
+				
+
+				//bool check = this->white ? wCheck : bCheck;
+
+				//if (!wCheck) {
+				//	//escapeCheckMoves.push_back(Point{ this->moves[i].x, this->moves[i].y });
+				//	cout << "ESCAPE CHECK\n";
+				//}
+				
+				//cout << "CHECK: " << check << "\n\n";
+				
+				this->customMove(Point{ prevMove.x, prevMove.y });
+			}
+		}
+
+		//if (check) {
+			//this->moves = escapeCheckMoves;
+		//}
 	}
 };

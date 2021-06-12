@@ -83,33 +83,18 @@ int main()
 
 				clicked = true;
 
-				//if (board[clickY][clickX]->type == 'k' && board[clickY][clickX]->white == whitePlay) {
-				//	Point prevPos = { clickX, clickY };
-				//	auto prevMoves = board[clickY][clickX]->moves;
-
-				//	cout << "PREV POS " << prevPos.x << "  " << prevPos.y;
-
-				//	for (int i = 0; i < prevMoves.size(); i++) {
-				//		if (board[prevMoves[i].y][prevMoves[i].x]->type == '0') {
-				//			board[clickY][clickX]->move(Point{ prevMoves[i].x, prevMoves[i].y });
-
-				//			//generateBoardMoves();
-				//			board[clickY][clickX]->generateMoves();
-
-				//			whitePlay = !whitePlay;
-
-				//			board[prevPos.y][prevPos.x]->move(prevPos);
-
-				//			whitePlay = !whitePlay;
-				//			//cout << "wCheck: " << wCheck << endl;
-				//		}
-				//	}
-				//}
-
 				board[clickY][clickX]->generateMoves();
 
 				if (board[prevY][prevX]->type != '0') {
 					board[prevY][prevX]->move(Point{ clickX, clickY });
+					generateBoardMoves();
+				}
+
+				bool check = whitePlay ? wCheck : bCheck;
+
+				if (board[clickY][clickX]->white == whitePlay && check) {
+					//board[clickY][clickX]->ifCheck();
+					board[clickY][clickX]->moveCheck();
 				}
 			}
 		}

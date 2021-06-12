@@ -48,16 +48,16 @@ public:
 			}
 		}
 		
-		//castling
-		if (this->moved == false && board[this->y][this->x + 3]->moved == false && board[this->y][this->x + 3]->type == 'r') {
+		// Castling
+		if (!this->moved && board[this->y][this->x + 3]->type == 'r' && !board[this->y][this->x + 3]->moved) {
 			if (board[this->y][this->x + 1]->type == '0' && board[this->y][this->x + 2]->type == '0') {
-				moves.push_back(Point{ this->x + 2, this->y});
+				moves.push_back(Point{ this->x + 2, this->y });
 			}
 		}
 
-		if (this->moved == false && board[this->y][this->x - 4]->moved == false && board[this->y][this->x - 4]->type == 'r') {
+		if (!this->moved && board[this->y][this->x - 4]->type == 'r' && !board[this->y][this->x - 4]->moved) {
 			if (board[this->y][this->x - 1]->type == '0' && board[this->y][this->x - 2]->type == '0' && board[this->y][this->x - 3]->type == '0') {
-				moves.push_back(Point{ this->x - 2, this->y});
+				moves.push_back(Point{ this->x - 2, this->y });
 			}
 		}
 
@@ -73,19 +73,13 @@ public:
 		auto prevMoves = moves;
 		moves.clear();
 
-		//wCheck = false;
-		//bCheck = false;
-
 		for (int i = 0; i < prevMoves.size(); i++) {
 			if (this->white) {
 				if (!b_moves[prevMoves[i].y][prevMoves[i].x]) {
 					this->moves.push_back(Point{ prevMoves[i].x, prevMoves[i].y });
 				}
 				else {
-					cout << "WHITE CHECK" << endl;
-					cout << prevMoves[i].x << "  " << prevMoves[i].y << " | " << i << endl;
-
-					//wCheck = true;
+					//cout << "WHITE BLOCK" << endl;
 				}
 			}
 			else {
@@ -93,14 +87,50 @@ public:
 					this->moves.push_back(Point{ prevMoves[i].x, prevMoves[i].y });
 				}
 				else {
-					cout << "BLACK CHECK" << endl;
-					cout << prevMoves[i].x << "  " << prevMoves[i].y << " | " << i << endl;
-
-					//bCheck = true;
+					//cout << "BLACK BLOCK" << endl;
 				}
 			}
 		}
 
-		//if (wCheck)
+		auto wb_moves = this->white ? b_moves : w_moves;
+
+		if (wb_moves[this->y][this->x]) {
+			if (this->white) wCheck = true;
+			else bCheck = true;
+		}
+		else {
+			if (this->white) wCheck = false;
+			else bCheck = false;
+		}
+
+		if (this->white) {
+			cout << "KING CHECK: " << wCheck << endl;
+		}
+	}
+
+	void ifCheck() {
+		bool check = this->white ? wCheck : bCheck;
+		auto prevMove = Point{ this->x, this->y };
+
+		for (int i = 0; i < this->moves.size(); i++) {
+			if (board[this->moves[i].y][this->moves[i].x]->type == '0' && check) {
+				cout << this->moves[i].x << "  " << this->moves[i].y << "\t" << "  MOVE FROM CHECK\n";
+
+				board[this->y][this->x]->move(Point{ this->moves[i].x, this->moves[i].y });
+
+				whitePlay = this->white;
+
+				int prev_x = this->x;
+				int prev_y = this->y;
+
+				this->x = prevMove.x;
+				this->y = prevMove.y;
+
+				board[prevMove.y][prevMove.x] = board[prev_y][prev_x];
+				board[prev_y][prev_x] = new Piece('0');
+
+				generateBoardMoves();
+			}
+		}
 	}
 };
