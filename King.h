@@ -63,10 +63,10 @@ public:
 
 		for (int i = 0; i < moves.size(); i++) {
 			if (this->white) {
-				w_moves[moves[i].y][moves[i].x] = 1;
+				w_moves[moves[i].y][moves[i].x] = board[this->y][this->x];
 			}
 			else {
-				b_moves[moves[i].y][moves[i].x] = 1;
+				b_moves[moves[i].y][moves[i].x] = board[this->y][this->x];
 			}
 		}
 
@@ -75,7 +75,7 @@ public:
 
 		for (int i = 0; i < prevMoves.size(); i++) {
 			if (this->white) {
-				if (!b_moves[prevMoves[i].y][prevMoves[i].x]) {
+				if (b_moves[prevMoves[i].y][prevMoves[i].x]->type == '0') {
 					this->moves.push_back(Point{ prevMoves[i].x, prevMoves[i].y });
 				}
 				else {
@@ -83,7 +83,7 @@ public:
 				}
 			}
 			else {
-				if (!w_moves[prevMoves[i].y][prevMoves[i].x]) {
+				if (w_moves[prevMoves[i].y][prevMoves[i].x]->type == '0') {
 					this->moves.push_back(Point{ prevMoves[i].x, prevMoves[i].y });
 				}
 				else {
@@ -94,9 +94,11 @@ public:
 
 		auto wb_moves = this->white ? b_moves : w_moves;
 
-		if (wb_moves[this->y][this->x]) {
+		if (wb_moves[this->y][this->x]->type != '0') {
 			if (this->white) wCheck = true;
 			else bCheck = true;
+
+			whoMakeCheck = wb_moves[this->y][this->x];
 		}
 		else {
 			if (this->white) wCheck = false;

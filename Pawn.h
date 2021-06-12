@@ -28,26 +28,43 @@ public:
 		// King check verification
 		if (board[this->y - 1 * k][this->x - 1]->type == '0') {
 			if (this->white) {
-				w_moves[this->y - 1 * k][this->x - 1] = 1;
+				w_moves[this->y - 1 * k][this->x - 1] = board[this->y][this->x];
 			}
 			else {
-				b_moves[this->y - 1 * k][this->x - 1] = 1;
+				b_moves[this->y - 1 * k][this->x - 1] = board[this->y][this->x];
 			}
 		}
 		if (board[this->y - 1 * k][this->x + 1]->type == '0') {
 			if (this->white) {
-				w_moves[this->y - 1 * k][this->x + 1] = 1;
+				w_moves[this->y - 1 * k][this->x + 1] = board[this->y][this->x];
 			}
 			else {
-				b_moves[this->y - 1 * k][this->x + 1] = 1;
+				b_moves[this->y - 1 * k][this->x + 1] = board[this->y][this->x];
 			}
 		}
 
-		if (board[this->y - 1 * k][this->x]->type == '0') {
-			moves.push_back(Point{ this->x, this->y - 1 * k });
+		bool check = this->white ? wCheck : bCheck;
+		auto wb_moves = this->white ? b_moves : w_moves;
 
-			if (!this->moved && board[this->y - 2 * k][this->x]->type == '0') {
-				moves.push_back(Point{ this->x, this->y - 2 * k });
+		if (board[this->y - 1 * k][this->x]->type == '0') {
+			if (check) {
+				if (b_moves[this->y - 1 * k][this->x]->type == whoMakeCheck->type) {
+					this->moves.push_back(Point{ this->x, this->y - 1 * k });
+				}
+			}
+			else {
+				this->moves.push_back(Point{ this->x, this->y - 1 * k });
+			}
+			
+			if (!this->moved && board[this->y - 2 * k][this->x]->type == whoMakeCheck->type) {
+				if (check) {
+					if (b_moves[this->y - 2 * k][this->x]) {
+						this->moves.push_back(Point{ this->x, this->y - 2 * k });
+					}
+				}
+				else {
+					this->moves.push_back(Point{ this->x, this->y - 2 * k });
+				}
 			}
 		}
 	}

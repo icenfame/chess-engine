@@ -93,8 +93,11 @@ int main()
 				bool check = whitePlay ? wCheck : bCheck;
 
 				if (board[clickY][clickX]->white == whitePlay && check) {
-					//board[clickY][clickX]->ifCheck();
-					board[clickY][clickX]->moveCheck();
+					if (board[clickY][clickX]->type == 'k') {
+						board[clickY][clickX]->ifCheck();
+					}
+					
+					//board[clickY][clickX]->moveCheck();
 				}
 			}
 		}
