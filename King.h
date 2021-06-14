@@ -47,19 +47,7 @@ public:
 				moves.push_back(Point{ this->x - 1, this->y + 1 });
 			}
 		}
-		
-		// Castling
-		if (!this->moved && board[this->y][this->x + 3]->type == 'r' && !board[this->y][this->x + 3]->moved) {
-			if (board[this->y][this->x + 1]->type == '0' && board[this->y][this->x + 2]->type == '0') {
-				moves.push_back(Point{ this->x + 2, this->y });
-			}
-		}
 
-		if (!this->moved && board[this->y][this->x - 4]->type == 'r' && !board[this->y][this->x - 4]->moved) {
-			if (board[this->y][this->x - 1]->type == '0' && board[this->y][this->x - 2]->type == '0' && board[this->y][this->x - 3]->type == '0') {
-				moves.push_back(Point{ this->x - 2, this->y });
-			}
-		}
 
 		for (int i = 0; i < moves.size(); i++) {
 			if (this->white) {
@@ -78,20 +66,15 @@ public:
 				if (b_moves[prevMoves[i].y][prevMoves[i].x]->type == '0') {
 					this->moves.push_back(Point{ prevMoves[i].x, prevMoves[i].y });
 				}
-				else {
-					//cout << "WHITE BLOCK" << endl;
-				}
 			}
 			else {
 				if (w_moves[prevMoves[i].y][prevMoves[i].x]->type == '0') {
 					this->moves.push_back(Point{ prevMoves[i].x, prevMoves[i].y });
 				}
-				else {
-					//cout << "BLACK BLOCK" << endl;
-				}
 			}
 		}
 
+		bool check = this->white ? wCheck : bCheck;
 		auto wb_moves = this->white ? b_moves : w_moves;
 
 		if (wb_moves[this->y][this->x]->type != '0') {
@@ -99,6 +82,7 @@ public:
 			else bCheck = true;
 
 			whoMakeCheck = wb_moves[this->y][this->x];
+			whoUnderCheck = this;
 		}
 		else {
 			if (this->white) wCheck = false;
@@ -106,7 +90,63 @@ public:
 		}
 
 		if (this->white) {
-			cout << "KING CHECK: " << wCheck << endl;
+			cout << "WHITE KING CHECK: " << check << endl;
+		}
+		else {
+			cout << "BLACK KING CHECK: " << check << endl;
+		}
+
+		int checkMate = 0;
+
+		for (int i = 0; i < 8; i++) {
+			for (int j = 0; j < 8; j++) {
+				if (board[i][j]->type != '0' && board[i][j]->white == this->white) {
+					if (board[i][j]->moves.size() > 0) {
+						checkMate++;
+					}
+				}
+			}
+		}
+
+		if (!checkMate) {
+			cout << "VSIO NAGRAUSI\n";
+		}
+
+		// Castling
+		if (!this->moved && board[this->y][this->x + 3]->type == 'r' && !board[this->y][this->x + 3]->moved && !check && wb_moves[this->y][this->x + 1]->type == '0' && wb_moves[this->y][this->x + 2]->type == '0') {
+			if (board[this->y][this->x + 1]->type == '0' && board[this->y][this->x + 2]->type == '0') {
+				moves.push_back(Point{ this->x + 2, this->y });
+			}
+		}
+
+		if (!this->moved && board[this->y][this->x - 4]->type == 'r' && !board[this->y][this->x - 4]->moved && !check && wb_moves[this->y][this->x - 1]->type == '0' && wb_moves[this->y][this->x - 2]->type == '0') {
+			if (board[this->y][this->x - 1]->type == '0' && board[this->y][this->x - 2]->type == '0' && board[this->y][this->x - 3]->type == '0') {
+				moves.push_back(Point{ this->x - 2, this->y });
+			}
+		}
+
+		//cout << w_moves[7][1]->type << "  " << w_moves[7][1]->white << endl;
+	}
+
+	void customMove(Point to) {
+		if (this->white == whitePlay) {
+			int prev_x = this->x;
+			int prev_y = this->y;
+
+			this->x = to.x;
+			this->y = to.y;
+
+			board[to.y][to.x] = board[prev_y][prev_x];
+			board[prev_y][prev_x] = new Piece('0');
+
+			/*for (int i = 0; i < 8; i++) {
+				for (int j = 0; j < 8; j++) {
+					w_moves[i][j] = new Piece('0');
+					b_moves[i][j] = new Piece('0');
+				}
+			}*/
+
+			generateBoardMoves();
 		}
 	}
 
@@ -118,20 +158,11 @@ public:
 			if (board[this->moves[i].y][this->moves[i].x]->type == '0' && check) {
 				cout << this->moves[i].x << "  " << this->moves[i].y << "\t" << "  MOVE FROM CHECK\n";
 
-				board[this->y][this->x]->move(Point{ this->moves[i].x, this->moves[i].y });
+				board[this->y][this->x]->customMove(Point{ this->moves[i].x, this->moves[i].y });
 
-				whitePlay = this->white;
+				board[this->y][this->x]->customMove(Point{ prevMove.x, prevMove.y });
 
-				int prev_x = this->x;
-				int prev_y = this->y;
-
-				this->x = prevMove.x;
-				this->y = prevMove.y;
-
-				board[prevMove.y][prevMove.x] = board[prev_y][prev_x];
-				board[prev_y][prev_x] = new Piece('0');
-
-				generateBoardMoves();
+				//generateBoardMoves();
 			}
 		}
 	}

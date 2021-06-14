@@ -9,11 +9,18 @@ public:
 			if (board[y + 1][x + 1]->type == '0') {
 				moves.push_back(Point{ x + 1, y + 1 });
 			}
-			else if (board[y + 1][x + 1]->white != this->white) {
-				moves.push_back(Point{ x + 1, y + 1 });
+			else if (board[y + 1][x + 1]->white == this->white) {
+				if (this->white) {
+					w_moves[y + 1][x + 1] = board[y][x];
+				}
+				else {
+					b_moves[y + 1][x + 1] = board[y][x];
+				}
+
 				break;
 			}
 			else {
+				moves.push_back(Point{ x + 1, y + 1 });
 				break;
 			}
 		}
@@ -22,11 +29,18 @@ public:
 			if (board[y - 1][x - 1]->type == '0') {
 				moves.push_back(Point{ x - 1, y - 1 });
 			}
-			else if (board[y - 1][x - 1]->white != this->white) {
-				moves.push_back(Point{ x - 1, y - 1 });
+			else if (board[y - 1][x - 1]->white == this->white) {
+				if (this->white) {
+					w_moves[y - 1][x - 1] = board[y][x];
+				}
+				else {
+					b_moves[y - 1][x - 1] = board[y][x];
+				}
+
 				break;
 			}
 			else {
+				moves.push_back(Point{ x - 1, y - 1 });
 				break;
 			}
 		}
@@ -35,11 +49,18 @@ public:
 			if (board[y + 1][x - 1]->type == '0') {
 				moves.push_back(Point{ x - 1, y + 1 });
 			}
-			else if (board[y + 1][x - 1]->white != this->white) {
-				moves.push_back(Point{ x - 1, y + 1 });
+			else if (board[y + 1][x - 1]->white == this->white) {
+				if (this->white) {
+					w_moves[y + 1][x - 1] = board[y][x];
+				}
+				else {
+					b_moves[y + 1][x - 1] = board[y][x];
+				}
+
 				break;
 			}
 			else {
+				moves.push_back(Point{ x - 1, y + 1 });
 				break;
 			}
 		}
@@ -48,21 +69,28 @@ public:
 			if (board[y - 1][x + 1]->type == '0') {
 				moves.push_back(Point{ x + 1, y - 1 });
 			}
-			else if (board[y - 1][x + 1]->white != this->white) {
-				moves.push_back(Point{ x + 1, y - 1 });
+			else if (board[y - 1][x + 1]->white == this->white) {
+				if (this->white) {
+					w_moves[y - 1][x + 1] = board[y][x];
+				}
+				else {
+					b_moves[y - 1][x + 1] = board[y][x];
+				}
+
 				break;
 			}
 			else {
+				moves.push_back(Point{ x + 1, y - 1 });
 				break;
 			}
 		}
 
 		for (int i = 0; i < moves.size(); i++) {
 			if (this->white) {
-				w_moves[moves[i].y][moves[i].x] = board[this->y][this->x];
+				w_moves[moves[i].y][moves[i].x] = board[y][x];
 			}
 			else {
-				b_moves[moves[i].y][moves[i].x] = board[this->y][this->x];
+				b_moves[moves[i].y][moves[i].x] = board[y][x];
 			}
 		}
 	}

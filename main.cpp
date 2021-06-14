@@ -8,11 +8,11 @@ using namespace sf;
 
 #include "Piece.h"
 
+#include "Queen.h"
 #include "Pawn.h"
 #include "Knight.h"
 #include "Bishop.h"
 #include "Rook.h"
-#include "Queen.h"
 #include "King.h"
 
 #include "Board.h"
@@ -65,6 +65,9 @@ int main()
 	generateBoard("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR");
 	//generateBoard("4r2k/b7/8/4r3/6N1/3q4/8/2B1K3");
 	//generateBoard("7k/b7/8/8/8/3q4/8/4K1r1");
+
+	//generateBoard("8/6p1/2p3kp/P1Np1p2/3P3P/2P3P1/5q1K/1Q2n3");
+
 	printBoard();
 
 	while (window.isOpen())
@@ -99,6 +102,13 @@ int main()
 					
 					//board[clickY][clickX]->moveCheck();
 				}
+
+				/*for (int i = 0; i < 8; i++) {
+					for (int j = 0; j < 8; j++) {
+						cout << board[i][j]->type << board[i][j]->white << "\t";
+					}
+					cout << "\n";
+				}*/
 			}
 		}
 

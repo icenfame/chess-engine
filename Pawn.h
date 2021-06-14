@@ -14,6 +14,11 @@ public:
 			k = 1;
 		}
 
+		// Pawn to queen
+		if (this->white && this->y == 0 || !this->white && this->y == 7) {
+			board[this->y][this->x] = new Queen(this->x, this->y, this->white, 'q');
+		}
+
 		if (this->y - 1 < 0 || this->y + 1 > 7) {
 			return;
 		}
@@ -26,7 +31,7 @@ public:
 		}
 
 		// King check verification
-		if (board[this->y - 1 * k][this->x - 1]->type == '0') {
+		if (this->x - 1 >= 0) {
 			if (this->white) {
 				w_moves[this->y - 1 * k][this->x - 1] = board[this->y][this->x];
 			}
@@ -34,7 +39,7 @@ public:
 				b_moves[this->y - 1 * k][this->x - 1] = board[this->y][this->x];
 			}
 		}
-		if (board[this->y - 1 * k][this->x + 1]->type == '0') {
+		if (this->x + 1 <= 7) {
 			if (this->white) {
 				w_moves[this->y - 1 * k][this->x + 1] = board[this->y][this->x];
 			}
@@ -42,30 +47,16 @@ public:
 				b_moves[this->y - 1 * k][this->x + 1] = board[this->y][this->x];
 			}
 		}
-
-		bool check = this->white ? wCheck : bCheck;
-		auto wb_moves = this->white ? b_moves : w_moves;
-
+		
+		// Move 1 field and 2 fields
 		if (board[this->y - 1 * k][this->x]->type == '0') {
-			if (check) {
-				if (b_moves[this->y - 1 * k][this->x]->type == whoMakeCheck->type) {
-					this->moves.push_back(Point{ this->x, this->y - 1 * k });
-				}
-			}
-			else {
-				this->moves.push_back(Point{ this->x, this->y - 1 * k });
-			}
-			
-			if (!this->moved && board[this->y - 2 * k][this->x]->type == whoMakeCheck->type) {
-				if (check) {
-					if (b_moves[this->y - 2 * k][this->x]) {
-						this->moves.push_back(Point{ this->x, this->y - 2 * k });
-					}
-				}
-				else {
-					this->moves.push_back(Point{ this->x, this->y - 2 * k });
-				}
+			this->moves.push_back(Point{ this->x, this->y - 1 * k });
+
+			if (!this->moved && board[this->y - 2 * k][this->x]->type == '0') {
+				this->moves.push_back(Point{ this->x, this->y - 2 * k });
 			}
 		}
+
+		this->secureFromCheck();
 	}
 };
