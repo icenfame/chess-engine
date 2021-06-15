@@ -104,129 +104,129 @@ public:
 			auto prevMoves = this->moves;
 			this->moves.clear();
 
-			//for (int i = 0; i < prevMoves.size(); i++) {
-			//	Point startPoint = { whoUnderCheck->x, whoUnderCheck->y };
+			for (int i = 0; i < prevMoves.size(); i++) {
+				Point startPoint = { whoUnderCheck->x, whoUnderCheck->y };
 
-			//	int kx = 0, ky = 0;
+				int kx = 0, ky = 0;
 
-			//	if (whoUnderCheck->x - whoMakeCheck->x < 0) kx = 1;
-			//	if (whoUnderCheck->x - whoMakeCheck->x > 0) kx = -1;
+				if (whoUnderCheck->x - whoMakeCheck->x < 0) kx = 1;
+				if (whoUnderCheck->x - whoMakeCheck->x > 0) kx = -1;
 
-			//	if (whoUnderCheck->y - whoMakeCheck->y < 0) ky = 1;
-			//	if (whoUnderCheck->y - whoMakeCheck->y > 0) ky = -1;
+				if (whoUnderCheck->y - whoMakeCheck->y < 0) ky = 1;
+				if (whoUnderCheck->y - whoMakeCheck->y > 0) ky = -1;
 
-			//	int num;
+				int num;
 
-			//	// XY
-			//	if (abs(whoMakeCheck->x - whoUnderCheck->x) == abs(whoMakeCheck->y - whoUnderCheck->y)) {
-			//		num = (abs(whoMakeCheck->x - whoUnderCheck->x) + abs(whoMakeCheck->y - whoUnderCheck->y)) / 2;
-			//	}
-			//	// X
-			//	else if (whoMakeCheck->x - whoUnderCheck->x != 0) {
-			//		num = abs(whoMakeCheck->x - whoUnderCheck->x);
-			//	}
-			//	// Y
-			//	else {
-			//		num = abs(whoMakeCheck->y - whoUnderCheck->y);
-			//	}
-
-			//	for (int j = 1; j < num; j++) {
-			//		if (prevMoves[i].x == startPoint.x + (j * kx) && prevMoves[i].y == startPoint.y + (j * ky)) {
-			//			cout << "Start point: " << startPoint.x << "  " << startPoint.y << endl;
-			//			cout << "kx: " << kx << "  " << "ky: " << ky << endl;
-			//			cout << "num: " << num << endl;
-
-			//			cout << "moveX: " << prevMoves[i].x << endl;
-			//			cout << "moveY: " << prevMoves[i].y << endl;
-
-			//			this->moves.push_back(prevMoves[i]);
-			//		}
-			//		else if (prevMoves[i].x == whoMakeCheck->x && prevMoves[i].y == whoMakeCheck->y) {
-			//			this->moves.push_back(prevMoves[i]);
-			//		}
-			//	}
-			//}
-
-
-
-
-
-		for (int i = 0; i < prevMoves.size(); i++) {
-			if ((whoMakeCheck->y == whoUnderCheck->y && whoMakeCheck->y == prevMoves[i].y) || (whoMakeCheck->x == whoUnderCheck->x && whoMakeCheck->x == prevMoves[i].x)) {
-				if (wb_moves[prevMoves[i].y][prevMoves[i].x] == whoMakeCheck || board[prevMoves[i].y][prevMoves[i].x] == whoMakeCheck) {
-					Point startPoint = { whoUnderCheck->x, whoUnderCheck->y };
-
-					int kx = 0, ky = 0;
-
-					if (whoUnderCheck->x - whoMakeCheck->x < 0) {
-						kx = 1;
-					}
-					else if (whoUnderCheck->x - whoMakeCheck->x > 0) {
-						kx = -1;
-					}
-					if (whoUnderCheck->y - whoMakeCheck->y < 0) {
-						ky = 1;
-					}
-					else if (whoUnderCheck->y - whoMakeCheck->y > 0) {
-						ky = -1;
-					}
-
-					cout << "Start point: " << startPoint.x << "  " << startPoint.y << endl;
-					cout << "kx: " << kx << "  " << "ky: " << ky << endl;
-
-					int num;
-
-					if (whoMakeCheck->x - whoUnderCheck->x == 0) {
-						num = abs(whoMakeCheck->y - whoUnderCheck->y);
-					}
-					else {
-						num = abs(whoMakeCheck->x - whoUnderCheck->x);
-					}
-					
-					for (int j = 1; j < num; j++) {
-						if (prevMoves[i].x == startPoint.x + (j * kx) && prevMoves[i].y == startPoint.y + (j * ky)) {
-							this->moves.push_back(prevMoves[i]);
-						}
-					}
+				// XY
+				if (abs(whoMakeCheck->x - whoUnderCheck->x) == abs(whoMakeCheck->y - whoUnderCheck->y)) {
+					num = (abs(whoMakeCheck->x - whoUnderCheck->x) + abs(whoMakeCheck->y - whoUnderCheck->y)) / 2;
 				}
-			}
-			else if (abs(whoMakeCheck->x - whoUnderCheck->x) == abs(whoMakeCheck->y - whoUnderCheck->y)) {
-				if (board[prevMoves[i].y][prevMoves[i].x] == whoMakeCheck) {
-					this->moves.push_back(prevMoves[i]);
+				// X
+				else if (whoMakeCheck->x - whoUnderCheck->x != 0) {
+					num = abs(whoMakeCheck->x - whoUnderCheck->x);
 				}
+				// Y
 				else {
-					Point startPoint = { whoUnderCheck->x, whoUnderCheck->y };
+					num = abs(whoMakeCheck->y - whoUnderCheck->y);
+				}
 
-					int kx = 0, ky = 0;
+				for (int j = 1; j < num; j++) {
+					if (prevMoves[i].x == startPoint.x + (j * kx) && prevMoves[i].y == startPoint.y + (j * ky)) {
+						cout << "Start point: " << startPoint.x << "  " << startPoint.y << endl;
+						cout << "kx: " << kx << "  " << "ky: " << ky << endl;
+						cout << "num: " << num << endl;
 
-					if (whoUnderCheck->x - whoMakeCheck->x < 0) {
-						kx = 1;
-					}
-					else {
-						kx = -1;
-					}
-					if (whoUnderCheck->y - whoMakeCheck->y < 0) {
-						ky = 1;
-					}
-					else {
-						ky = -1;
-					}
+						cout << "moveX: " << prevMoves[i].x << endl;
+						cout << "moveY: " << prevMoves[i].y << endl;
 
-					cout << "Start point: " << startPoint.x << "  " << startPoint.y << endl;
-					cout << "kx: " << kx << "  " << "ky: " << ky << endl;
-
-					for (int j = 1; j < abs(whoMakeCheck->x - whoUnderCheck->x); j++) {
-						/*cout << startPoint.x + (j * kx) << "|\t|" << startPoint.y + (j * ky) << endl;*/
-						if (prevMoves[i].x == startPoint.x + (j * kx) && prevMoves[i].y == startPoint.y + (j * ky)) {
-							this->moves.push_back(prevMoves[i]);
-						}
+						this->moves.push_back(prevMoves[i]);
+					}
+					else if (prevMoves[i].x == whoMakeCheck->x && prevMoves[i].y == whoMakeCheck->y) {
+						this->moves.push_back(prevMoves[i]);
 					}
 				}
 			}
-			else if (whoMakeCheck->type == 'n' && whoMakeCheck == board[prevMoves[i].y][prevMoves[i].x]) {
-				this->moves.push_back(prevMoves[i]);
-			}
-		}
+
+
+
+
+
+		//	for (int i = 0; i < prevMoves.size(); i++) {
+		//		if ((whoMakeCheck->y == whoUnderCheck->y && whoMakeCheck->y == prevMoves[i].y) || (whoMakeCheck->x == whoUnderCheck->x && whoMakeCheck->x == prevMoves[i].x)) {
+		//			if (wb_moves[prevMoves[i].y][prevMoves[i].x] == whoMakeCheck || board[prevMoves[i].y][prevMoves[i].x] == whoMakeCheck) {
+		//				Point startPoint = { whoUnderCheck->x, whoUnderCheck->y };
+
+		//				int kx = 0, ky = 0;
+
+		//				if (whoUnderCheck->x - whoMakeCheck->x < 0) {
+		//					kx = 1;
+		//				}
+		//				else if (whoUnderCheck->x - whoMakeCheck->x > 0) {
+		//					kx = -1;
+		//				}
+		//				if (whoUnderCheck->y - whoMakeCheck->y < 0) {
+		//					ky = 1;
+		//				}
+		//				else if (whoUnderCheck->y - whoMakeCheck->y > 0) {
+		//					ky = -1;
+		//				}
+
+		//				cout << "Start point: " << startPoint.x << "  " << startPoint.y << endl;
+		//				cout << "kx: " << kx << "  " << "ky: " << ky << endl;
+
+		//				int num;
+
+		//				if (whoMakeCheck->x - whoUnderCheck->x == 0) {
+		//					num = abs(whoMakeCheck->y - whoUnderCheck->y);
+		//				}
+		//				else {
+		//					num = abs(whoMakeCheck->x - whoUnderCheck->x);
+		//				}
+		//				
+		//				for (int j = 1; j < num; j++) {
+		//					if (prevMoves[i].x == startPoint.x + (j * kx) && prevMoves[i].y == startPoint.y + (j * ky)) {
+		//						this->moves.push_back(prevMoves[i]);
+		//					}
+		//				}
+		//			}
+		//		}
+		//		else if (abs(whoMakeCheck->x - whoUnderCheck->x) == abs(whoMakeCheck->y - whoUnderCheck->y)) {
+		//			if (board[prevMoves[i].y][prevMoves[i].x] == whoMakeCheck) {
+		//				this->moves.push_back(prevMoves[i]);
+		//			}
+		//			else {
+		//				Point startPoint = { whoUnderCheck->x, whoUnderCheck->y };
+
+		//				int kx = 0, ky = 0;
+
+		//				if (whoUnderCheck->x - whoMakeCheck->x < 0) {
+		//					kx = 1;
+		//				}
+		//				else {
+		//					kx = -1;
+		//				}
+		//				if (whoUnderCheck->y - whoMakeCheck->y < 0) {
+		//					ky = 1;
+		//				}
+		//				else {
+		//					ky = -1;
+		//				}
+
+		//				cout << "Start point: " << startPoint.x << "  " << startPoint.y << endl;
+		//				cout << "kx: " << kx << "  " << "ky: " << ky << endl;
+
+		//				for (int j = 1; j < abs(whoMakeCheck->x - whoUnderCheck->x); j++) {
+		//					/*cout << startPoint.x + (j * kx) << "|\t|" << startPoint.y + (j * ky) << endl;*/
+		//					if (prevMoves[i].x == startPoint.x + (j * kx) && prevMoves[i].y == startPoint.y + (j * ky)) {
+		//						this->moves.push_back(prevMoves[i]);
+		//					}
+		//				}
+		//			}
+		//		}
+		//		else if (whoMakeCheck->type == 'n' && whoMakeCheck == board[prevMoves[i].y][prevMoves[i].x]) {
+		//			this->moves.push_back(prevMoves[i]);
+		//		}
+		//	}
 		}
 	}
 
