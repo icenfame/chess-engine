@@ -107,18 +107,7 @@ int main()
 					if (board[clickY][clickX]->type == 'k') {
 						board[clickY][clickX]->ifCheck();
 					}
-					
-					//board[clickY][clickX]->moveCheck();
 				}
-
-				/*for (int i = 0; i < 8; i++) {
-					for (int j = 0; j < 8; j++) {
-						cout << b_moves[i][j]->type << b_moves[i][j]->white << "\t";
-					}
-					cout << "\n";
-				}*/
-
-				//cout << "CHEKS: " << wCheck << "\n\n\n";
 			}
 		}
 
@@ -234,6 +223,8 @@ int main()
 			if (choice == IDYES) {
 				generateBoard("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR");
 				checkMate = false;
+				wCheck = 0;
+				bCheck = 0;
 			}
 			else {
 				exit(0);

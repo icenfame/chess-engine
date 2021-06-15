@@ -15,7 +15,6 @@ void generateBoardMoves() {
 				board[i][j]->generateMoves();
 			}
 			else {
-				//board[i][j]->attackPriority();
 				board[i][j]->secureFromCheck();
 				board[i][j]->preventFromCheck();
 			}

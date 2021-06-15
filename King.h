@@ -48,10 +48,12 @@ public:
 			}
 		}
 
-
 		this->attackPriority();
 
 		// Escape check
+		int check = this->white ? wCheck : bCheck;
+		auto wb_moves = this->white ? b_moves : w_moves;
+
 		auto prevMoves = moves;
 		moves.clear();
 
@@ -68,22 +70,6 @@ public:
 			}
 		}
 
-		// If check
-		int check = this->white ? wCheck : bCheck;
-		auto wb_moves = this->white ? b_moves : w_moves;
-
-		/*if (wb_moves[this->y][this->x]->type != '0') {
-			if (this->white) wCheck++;
-			else bCheck++;
-
-			whoMakeCheck = wb_moves[this->y][this->x];
-			whoUnderCheck = this;
-		}
-		else {
-			if (this->white) wCheck = 0;
-			else bCheck = 0;
-		}*/
-		
 		// Castling
 		if (this->x + 3 <= 7) {
 			if (!this->moved && board[this->y][this->x + 3]->type == 'r' && !board[this->y][this->x + 3]->moved && !check && wb_moves[this->y][this->x + 1]->type == '0' && wb_moves[this->y][this->x + 2]->type == '0') {
@@ -139,13 +125,6 @@ public:
 			board[to.y][to.x] = board[prev_y][prev_x];
 			board[prev_y][prev_x] = new Piece('0');
 
-			/*for (int i = 0; i < 8; i++) {
-				for (int j = 0; j < 8; j++) {
-					w_moves[i][j] = new Piece('0');
-					b_moves[i][j] = new Piece('0');
-				}
-			}*/
-
 			generateBoardMoves();
 		}
 	}
@@ -159,10 +138,7 @@ public:
 				cout << this->moves[i].x << "  " << this->moves[i].y << "\t" << "  MOVE FROM CHECK\n";
 
 				board[this->y][this->x]->customMove(Point{ this->moves[i].x, this->moves[i].y });
-
 				board[this->y][this->x]->customMove(Point{ prevMove.x, prevMove.y });
-
-				//generateBoardMoves();
 			}
 		}
 	}

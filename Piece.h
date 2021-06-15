@@ -199,10 +199,6 @@ public:
 				int pieces = 0;
 
 				for (int j = 1; j <= num; j++) {
-					/*cout << "Start point: " << startPoint.x << "  " << startPoint.y << endl;
-					cout << "kx: " << kx << "  " << "ky: " << ky << endl;
-					cout << "num: " << num << endl;*/
-
 					if (board[startPoint.y + (j * ky)][startPoint.x + (j * kx)]->type != '0') {
 						pieces++;
 
@@ -271,7 +267,6 @@ public:
 
 		if (check >= 2) {
 			this->moves.clear();
-			//king->generateMoves();
 		}
 	}
 };
