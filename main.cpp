@@ -96,11 +96,11 @@ int main()
 
 				clicked = true;
 
-				//board[clickY][clickX]->generateMoves();
+				board[clickY][clickX]->generateMoves();
 
 				if (board[prevY][prevX]->type != '0') {
 					board[prevY][prevX]->move(Point{ clickX, clickY });
-					//generateBoardMoves();
+					generateBoardMoves();
 				}
 
 				bool check = whitePlay ? wCheck : bCheck;
@@ -113,14 +113,12 @@ int main()
 					//board[clickY][clickX]->moveCheck();
 				}
 
-				/*for (int i = 0; i < 8; i++) {
+				for (int i = 0; i < 8; i++) {
 					for (int j = 0; j < 8; j++) {
 						cout << b_moves[i][j]->type << b_moves[i][j]->white << "\t";
 					}
 					cout << "\n";
-				}*/
-
-				cout << "CHEKS: " << wCheck << "\n\n\n";
+				}
 			}
 		}
 

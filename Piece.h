@@ -13,8 +13,8 @@ Piece* b_moves[8][8];
 
 bool whitePlay = true;
 
-int wCheck = 0;
-int bCheck = 0;
+bool wCheck = false;
+bool bCheck = false;
 
 bool checkMate = false;
 
@@ -109,7 +109,7 @@ public:
 			auto prevMoves = this->moves;
 			this->moves.clear();
 
-			//cout << "Who make check: " << whoMakeCheck->type << endl;
+			cout << "Who make check: " << whoMakeCheck->type << endl;
 
 			for (int i = 0; i < prevMoves.size(); i++) {
 				Point startPoint = { whoUnderCheck->x, whoUnderCheck->y };
@@ -224,7 +224,7 @@ public:
 
 	void attackPriority() {
 		auto king = this->white ? wKing : bKing;
-		auto wb_moves = this->white ? w_moves : b_moves;
+		auto wb_moves = this->white ? b_moves : w_moves;
 
 		for (int i = 0; i < this->moves.size(); i++) {
 			if (wb_moves[this->moves[i].y][this->moves[i].x]->type == '0') {
@@ -235,7 +235,7 @@ public:
 					b_moves[this->moves[i].y][this->moves[i].x] = this;
 				}
 			}
-			else if (king && (this->x == king->x || this->y == king->y || abs(this->x - king->x) == abs(this->y - king->y))) {
+			else if (this->x == king->x || this->y == king->y || abs(this->x - king->x) == abs(this->y - king->y)) {
 				if (this->white) {
 					w_moves[this->moves[i].y][this->moves[i].x] = this;
 				}
@@ -243,29 +243,6 @@ public:
 					b_moves[this->moves[i].y][this->moves[i].x] = this;
 				}
 			}
-		}
-	}
-
-	void kingCheck() {
-		int check = this->white ? wCheck : bCheck;
-		auto king = !this->white ? wKing : bKing;
-
-		for (int i = 0; i < this->moves.size(); i++) {
-			if (king && (this->moves[i].x == king->x && this->moves[i].y == king->y)) {
-				if (!this->white) {
-					wCheck++;
-				}
-				else {
-					bCheck++;
-				}
-
-				whoMakeCheck = this;
-				whoUnderCheck = king;
-			}
-		}
-
-		if (check >= 2) {
-			this->moves.clear();
 		}
 	}
 };
