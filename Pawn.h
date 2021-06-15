@@ -31,20 +31,42 @@ public:
 		}
 
 		// King check verification
+		auto king = this->white ? wKing : bKing;
+
 		if (this->x - 1 >= 0) {
 			if (this->white) {
-				w_moves[this->y - 1 * k][this->x - 1].push_back(this);
+				if (w_moves[this->y - 1 * k][this->x - 1]->type == '0') {
+					w_moves[this->y - 1 * k][this->x - 1] = this;
+				}
+				else if (king && (this->x == king->x || this->y == king->y)) {
+					w_moves[this->y - 1 * k][this->x - 1] = this;
+				}
 			}
 			else {
-				b_moves[this->y - 1 * k][this->x - 1].push_back(this);
+				if (b_moves[this->y - 1 * k][this->x - 1]->type == '0') {
+					b_moves[this->y - 1 * k][this->x - 1] = this;
+				}
+				else if (king && (this->x == king->x || this->y == king->y)) {
+					b_moves[this->y - 1 * k][this->x - 1] = this;
+				}
 			}
 		}
 		if (this->x + 1 <= 7) {
 			if (this->white) {
-				w_moves[this->y - 1 * k][this->x + 1].push_back(this);
+				if (w_moves[this->y - 1 * k][this->x + 1]->type == '0') {
+					w_moves[this->y - 1 * k][this->x + 1] = this;
+				}
+				else if (king &&  (this->x == king->x || this->y == king->y)) {
+					w_moves[this->y - 1 * k][this->x + 1] = this;
+				}
 			}
 			else {
-				b_moves[this->y - 1 * k][this->x + 1].push_back(this);
+				if (b_moves[this->y - 1 * k][this->x + 1]->type == '0') {
+					b_moves[this->y - 1 * k][this->x + 1] = this;
+				}
+				else if (king && (this->x == king->x || this->y == king->y)) {
+					b_moves[this->y - 1 * k][this->x + 1] = this;
+				}
 			}
 		}
 		

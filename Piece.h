@@ -8,8 +8,8 @@ void generateBoardMoves();
 
 Piece* board[8][8];
 
-vector<Piece*> w_moves[8][8];
-vector<Piece*> b_moves[8][8];
+Piece* w_moves[8][8];
+Piece* b_moves[8][8];
 
 bool whitePlay = true;
 
@@ -45,11 +45,8 @@ public:
 
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
-				w_moves[i][j].clear();
-				w_moves[i][j].push_back(new Piece('0'));
-
-				b_moves[i][j].clear();
-				b_moves[i][j].push_back(new Piece('0'));
+				w_moves[i][j] = new Piece('0');
+				b_moves[i][j] = new Piece('0');
 			}
 		}
 
@@ -165,8 +162,10 @@ public:
 
 		auto prevMoves = this->moves;
 
+
 		if (wb_moves[this->y][this->x]->type != '0' && wb_moves[this->y][this->x]->type != 'n' && wb_moves[this->y][this->x]->type != 'p' && wb_moves[this->y][this->x]->type != 'k') {
-			for (int i = 0; i < prevMoves.size(); i++) {
+			if (wb_moves[this->y][this->x]->y == king->y || wb_moves[this->y][this->x]->x == king->x || abs(wb_moves[this->y][this->x]->x - king->x) == abs(wb_moves[this->y][this->x]->y - king->y)) {
+					
 				Point startPoint = { king->x, king->y };
 
 				int kx = 0, ky = 0;
@@ -192,15 +191,17 @@ public:
 					num = abs(wb_moves[this->y][this->x]->y - king->y);
 				}
 
-				cout << "Start point: " << startPoint.x << "  " << startPoint.y << endl;
-				cout << "kx: " << kx << "  " << "ky: " << ky << endl;
-				cout << "num: " << num << endl;
-
-				cout << "moveX: " << prevMoves[i].x << endl;
-				cout << "moveY: " << prevMoves[i].y << endl;
-
 				int pieces = 0;
+
 				for (int j = 1; j <= num; j++) {
+
+					/**/cout << "Start point: " << startPoint.x << "  " << startPoint.y << endl;
+					cout << "kx: " << kx << "  " << "ky: " << ky << endl;
+					cout << "num: " << num << endl;
+
+					
+
+
 					if (board[startPoint.y + (j * ky)][startPoint.x + (j * kx)]->type != '0') {
 						pieces++;
 
@@ -210,16 +211,16 @@ public:
 					if (board[startPoint.y + (j * ky)][startPoint.x + (j * kx)] == this) {
 						this->moves.clear();
 
-						/*cout << "Start point: " << startPoint.x << "  " << startPoint.y << endl;
-						cout << "kx: " << kx << "  " << "ky: " << ky << endl;
-						cout << "num: " << num << endl;
-
-						cout << "moveX: " << prevMoves[i].x << endl;
-						cout << "moveY: " << prevMoves[i].y << endl;*/
-
-						if (prevMoves[i].x == startPoint.x + (j * kx) && prevMoves[i].y == startPoint.y + (j * ky)) {
-							this->moves.push_back(prevMoves[i]);
+						cout << "\n\nCLEARED\n\n" << endl;
+						cout << endl << this->type << endl;
+						for (int i = 0; i < prevMoves.size(); i++) {
+							for (int k = 1; k <= num; k++) {
+								if (prevMoves[i].x == startPoint.x + (k * kx) && prevMoves[i].y == startPoint.y + (k * ky)) {
+									this->moves.push_back(prevMoves[i]);
+								}
+							}
 						}
+						break;
 					}
 				}
 			}

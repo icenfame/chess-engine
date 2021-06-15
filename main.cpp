@@ -9,12 +9,12 @@ using namespace sf;
 
 #include "Piece.h"
 
+#include "King.h"
 #include "Queen.h"
 #include "Pawn.h"
 #include "Knight.h"
 #include "Bishop.h"
 #include "Rook.h"
-#include "King.h"
 
 #include "Board.h"
 
@@ -113,12 +113,12 @@ int main()
 					//board[clickY][clickX]->moveCheck();
 				}
 
-				/*for (int i = 0; i < 8; i++) {
+				for (int i = 0; i < 8; i++) {
 					for (int j = 0; j < 8; j++) {
-						cout << b_moves[i][j]->type << b_moves[i][j]->white << "\t";
+						cout << w_moves[i][j]->type << w_moves[i][j]->white << "\t";
 					}
 					cout << "\n";
-				}*/
+				}
 			}
 		}
 

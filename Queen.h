@@ -11,10 +11,10 @@ public:
 			}
 			else if (board[y + 1][x + 1]->white == this->white) {
 				if (this->white) {
-					w_moves[y + 1][x + 1].push_back(this);
+					w_moves[y + 1][x + 1] = this;
 				}
 				else {
-					b_moves[y + 1][x + 1].push_back(this);
+					b_moves[y + 1][x + 1] = this;
 				}
 
 				break;
@@ -31,10 +31,10 @@ public:
 			}
 			else if (board[y - 1][x - 1]->white == this->white) {
 				if (this->white) {
-					w_moves[y - 1][x - 1].push_back(this);
+					w_moves[y - 1][x - 1] = this;
 				}
 				else {
-					b_moves[y - 1][x - 1].push_back(this);
+					b_moves[y - 1][x - 1] = this;
 				}
 
 				break;
@@ -51,10 +51,10 @@ public:
 			}
 			else if (board[y + 1][x - 1]->white == this->white) {
 				if (this->white) {
-					w_moves[y + 1][x - 1].push_back(this);
+					w_moves[y + 1][x - 1] = this;
 				}
 				else {
-					b_moves[y + 1][x - 1].push_back(this);
+					b_moves[y + 1][x - 1] = this;
 				}
 
 				break;
@@ -71,10 +71,10 @@ public:
 			}
 			else if (board[y - 1][x + 1]->white == this->white) {
 				if (this->white) {
-					w_moves[y - 1][x + 1].push_back(this);
+					w_moves[y - 1][x + 1] = this;
 				}
 				else {
-					b_moves[y - 1][x + 1].push_back(this);
+					b_moves[y - 1][x + 1] = this;
 				}
 
 				break;
@@ -91,10 +91,10 @@ public:
 			}
 			else if (board[this->y][x + 1]->white == this->white) {
 				if (this->white) {
-					w_moves[this->y][x + 1].push_back(this);
+					w_moves[this->y][x + 1] = this;
 				}
 				else {
-					b_moves[this->y][x + 1].push_back(this);
+					b_moves[this->y][x + 1] = this;
 				}
 
 				break;
@@ -111,10 +111,10 @@ public:
 			}
 			else if (board[this->y][x - 1]->white == this->white) {
 				if (this->white) {
-					w_moves[this->y][x - 1].push_back(this);
+					w_moves[this->y][x - 1] = this;
 				}
 				else {
-					b_moves[this->y][x - 1].push_back(this);
+					b_moves[this->y][x - 1] = this;
 				}
 
 				break;
@@ -131,10 +131,10 @@ public:
 			}
 			else if (board[y + 1][this->x]->white == this->white) {
 				if (this->white) {
-					w_moves[y + 1][this->x].push_back(this);
+					w_moves[y + 1][this->x] = this;
 				}
 				else {
-					b_moves[y + 1][this->x].push_back(this);
+					b_moves[y + 1][this->x] = this;
 				}
 
 				break;
@@ -151,10 +151,10 @@ public:
 			}
 			else if (board[y - 1][this->x]->white == this->white) {
 				if (this->white) {
-					w_moves[y - 1][this->x].push_back(this);
+					w_moves[y - 1][this->x] = this;
 				}
 				else {
-					b_moves[y - 1][this->x].push_back(this);
+					b_moves[y - 1][this->x] = this;
 				}
 
 				break;
@@ -164,13 +164,24 @@ public:
 				break;
 			}
 		}
+		auto king = this->white ? wKing : bKing;
 
 		for (int i = 0; i < moves.size(); i++) {
 			if (this->white) {
-				w_moves[moves[i].y][moves[i].x].push_back(this);
+				if (w_moves[moves[i].y][moves[i].x]->type == '0') {
+					w_moves[moves[i].y][moves[i].x] = this;
+				}
+				else if (this->x == king->x || this->y == king->y ) {
+					w_moves[moves[i].y][moves[i].x] = this;
+				}
 			}
 			else {
-				b_moves[moves[i].y][moves[i].x].push_back(this);
+				if (b_moves[moves[i].y][moves[i].x]->type == '0') {
+					b_moves[moves[i].y][moves[i].x] = this;
+				}
+				else if (this->x == king->x || this->y == king->y) {
+					b_moves[moves[i].y][moves[i].x] = this;
+				}
 			}
 		}
 

@@ -51,10 +51,10 @@ public:
 
 		for (int i = 0; i < moves.size(); i++) {
 			if (this->white) {
-				w_moves[moves[i].y][moves[i].x].push_back(board[this->y][this->x]);
+				w_moves[moves[i].y][moves[i].x] = board[this->y][this->x];
 			}
 			else {
-				b_moves[moves[i].y][moves[i].x].push_back(board[this->y][this->x]);
+				b_moves[moves[i].y][moves[i].x] = board[this->y][this->x];
 			}
 		}
 
