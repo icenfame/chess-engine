@@ -118,7 +118,7 @@ int main()
 					cout << "\n";
 				}*/
 
-				cout << "CHEKS: " << wCheck << "\n\n\n";
+				//cout << "CHEKS: " << wCheck << "\n\n\n";
 			}
 		}
 

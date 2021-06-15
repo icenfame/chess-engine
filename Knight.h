@@ -122,7 +122,7 @@ public:
 
 		this->attackPriority();
 		this->secureFromCheck();
-		//this->preventFromCheck();
+		this->preventFromCheck();
 		this->kingCheck();
 	}
 };

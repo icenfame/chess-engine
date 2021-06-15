@@ -109,47 +109,49 @@ public:
 			auto prevMoves = this->moves;
 			this->moves.clear();
 
-			cout << "Who make check: " << this->x << " " << this->y << endl;
+			if (whoMakeCheck->x == whoUnderCheck->x || whoMakeCheck->y == whoUnderCheck->y || abs(whoMakeCheck->x - whoUnderCheck->x) == abs(whoMakeCheck->y - whoUnderCheck->y)) {
+				//cout << "Who make check: " << this->x << " " << this->y << endl;
 
-			for (int i = 0; i < prevMoves.size(); i++) {
-				Point startPoint = { whoUnderCheck->x, whoUnderCheck->y };
+				for (int i = 0; i < prevMoves.size(); i++) {
+					Point startPoint = { whoUnderCheck->x, whoUnderCheck->y };
 
-				int kx = 0, ky = 0;
+					int kx = 0, ky = 0;
 
-				if (whoUnderCheck->x - whoMakeCheck->x < 0) kx = 1;
-				if (whoUnderCheck->x - whoMakeCheck->x > 0) kx = -1;
+					if (whoUnderCheck->x - whoMakeCheck->x < 0) kx = 1;
+					if (whoUnderCheck->x - whoMakeCheck->x > 0) kx = -1;
 
-				if (whoUnderCheck->y - whoMakeCheck->y < 0) ky = 1;
-				if (whoUnderCheck->y - whoMakeCheck->y > 0) ky = -1;
+					if (whoUnderCheck->y - whoMakeCheck->y < 0) ky = 1;
+					if (whoUnderCheck->y - whoMakeCheck->y > 0) ky = -1;
 
-				int num;
+					int num;
 
-				// XY
-				if (abs(whoMakeCheck->x - whoUnderCheck->x) == abs(whoMakeCheck->y - whoUnderCheck->y)) {
-					num = (abs(whoMakeCheck->x - whoUnderCheck->x) + abs(whoMakeCheck->y - whoUnderCheck->y)) / 2;
-				}
-				// X
-				else if (whoMakeCheck->x - whoUnderCheck->x != 0) {
-					num = abs(whoMakeCheck->x - whoUnderCheck->x);
-				}
-				// Y
-				else {
-					num = abs(whoMakeCheck->y - whoUnderCheck->y);
-				}
-
-				for (int j = 1; j <= num; j++) {
-					if (prevMoves[i].x == startPoint.x + (j * kx) && prevMoves[i].y == startPoint.y + (j * ky)) {
-						/*cout << "Start point: " << startPoint.x << "  " << startPoint.y << endl;
-						cout << "kx: " << kx << "  " << "ky: " << ky << endl;
-						cout << "num: " << num << endl;
-
-						cout << "moveX: " << prevMoves[i].x << endl;
-						cout << "moveY: " << prevMoves[i].y << endl;*/
-
-						this->moves.push_back(prevMoves[i]);
+					// XY
+					if (abs(whoMakeCheck->x - whoUnderCheck->x) == abs(whoMakeCheck->y - whoUnderCheck->y)) {
+						num = (abs(whoMakeCheck->x - whoUnderCheck->x) + abs(whoMakeCheck->y - whoUnderCheck->y)) / 2;
 					}
-					else if (prevMoves[i].x == whoMakeCheck->x && prevMoves[i].y == whoMakeCheck->y) {
-						this->moves.push_back(prevMoves[i]);
+					// X
+					else if (whoMakeCheck->x - whoUnderCheck->x != 0) {
+						num = abs(whoMakeCheck->x - whoUnderCheck->x);
+					}
+					// Y
+					else {
+						num = abs(whoMakeCheck->y - whoUnderCheck->y);
+					}
+
+					for (int j = 1; j <= num; j++) {
+						if (prevMoves[i].x == startPoint.x + (j * kx) && prevMoves[i].y == startPoint.y + (j * ky)) {
+							cout << "Start point: " << startPoint.x << "  " << startPoint.y << endl;
+							cout << "kx: " << kx << "  " << "ky: " << ky << endl;
+							cout << "num: " << num << endl;
+
+							cout << "moveX: " << prevMoves[i].x << endl;
+							cout << "moveY: " << prevMoves[i].y << endl;
+
+							this->moves.push_back(prevMoves[i]);
+						}
+						else if (prevMoves[i].x == whoMakeCheck->x && prevMoves[i].y == whoMakeCheck->y) {
+							this->moves.push_back(prevMoves[i]);
+						}
 					}
 				}
 			}
