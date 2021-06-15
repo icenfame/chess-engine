@@ -21,10 +21,10 @@ public:
 			}
 			else {
 				if (this->white) {
-					w_moves[this->y - 2 * k][this->x + 1] = board[this->y][this->x];
+					w_moves[this->y - 2 * k][this->x + 1] = this;
 				}
 				else {
-					b_moves[this->y - 2 * k][this->x + 1] = board[this->y][this->x];
+					b_moves[this->y - 2 * k][this->x + 1] = this;
 				}
 			}
 		}
@@ -34,10 +34,10 @@ public:
 			}
 			else {
 				if (this->white) {
-					w_moves[this->y - 2 * k][this->x - 1] = board[this->y][this->x];
+					w_moves[this->y - 2 * k][this->x - 1] = this;
 				}
 				else {
-					b_moves[this->y - 2 * k][this->x - 1] = board[this->y][this->x];
+					b_moves[this->y - 2 * k][this->x - 1] = this;
 				}
 			}
 		}
@@ -48,10 +48,10 @@ public:
 			}
 			else {
 				if (this->white) {
-					w_moves[this->y + 2 * k][this->x + 1] = board[this->y][this->x];
+					w_moves[this->y + 2 * k][this->x + 1] = this;
 				}
 				else {
-					b_moves[this->y + 2 * k][this->x + 1] = board[this->y][this->x];
+					b_moves[this->y + 2 * k][this->x + 1] = this;
 				}
 			}
 		}
@@ -61,10 +61,10 @@ public:
 			}
 			else {
 				if (this->white) {
-					w_moves[this->y + 2 * k][this->x - 1] = board[this->y][this->x];
+					w_moves[this->y + 2 * k][this->x - 1] = this;
 				}
 				else {
-					b_moves[this->y + 2 * k][this->x - 1] = board[this->y][this->x];
+					b_moves[this->y + 2 * k][this->x - 1] = this;
 				}
 			}
 		}
@@ -76,9 +76,9 @@ public:
 			}
 			else {
 				if (this->white) {
-					w_moves[this->y - 1 * k][this->x + 2] = board[this->y][this->x];
+					w_moves[this->y - 1 * k][this->x + 2] = this;
 				} else {
-					b_moves[this->y - 1 * k][this->x + 2] = board[this->y][this->x];
+					b_moves[this->y - 1 * k][this->x + 2] = this;
 				}
 			}
 		}
@@ -88,9 +88,9 @@ public:
 			}
 			else {
 				if (this->white) {
-					w_moves[this->y - 1 * k][this->x - 2] = board[this->y][this->x];
+					w_moves[this->y - 1 * k][this->x - 2] = this;
 				} else {
-					b_moves[this->y - 1 * k][this->x - 2] = board[this->y][this->x];
+					b_moves[this->y - 1 * k][this->x - 2] = this;
 				}
 			}
 		}
@@ -101,9 +101,9 @@ public:
 			}
 			else {
 				if (this->white) {
-					w_moves[this->y + 1 * k][this->x + 2] = board[this->y][this->x];
+					w_moves[this->y + 1 * k][this->x + 2] = this;
 				} else {
-					b_moves[this->y + 1 * k][this->x + 2] = board[this->y][this->x];
+					b_moves[this->y + 1 * k][this->x + 2] = this;
 				}
 			}
 		}
@@ -113,22 +113,23 @@ public:
 			}
 			else {
 				if (this->white) {
-					w_moves[this->y + 1 * k][this->x - 2] = board[this->y][this->x];
+					w_moves[this->y + 1 * k][this->x - 2] = this;
 				} else {
-					b_moves[this->y + 1 * k][this->x - 2] = board[this->y][this->x];
+					b_moves[this->y + 1 * k][this->x - 2] = this;
 				}
 			}
 		}
 
 		for (int i = 0; i < moves.size(); i++) {
 			if (this->white) {
-				w_moves[moves[i].y][moves[i].x] = board[this->y][this->x];
+				w_moves[moves[i].y][moves[i].x] = this;
 			}
 			else {
-				b_moves[moves[i].y][moves[i].x] = board[this->y][this->x];
+				b_moves[moves[i].y][moves[i].x] = this;
 			}
 		}
 
 		this->secureFromCheck();
+		this->preventFromCheck();
 	}
 };

@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include <windows.h>
 
 #include <iostream>
 #include <vector>
@@ -19,23 +20,24 @@ using namespace sf;
 
 int main()
 {
-	RenderWindow window(VideoMode(800, 800), "Chess");
+	RenderWindow window(VideoMode(800, 800), "Chess", Style::Titlebar | Style::Close);
+	window.setFramerateLimit(60);
 
 	Texture t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13;
 
-	t1.loadFromFile("img/board.png");
-	t2.loadFromFile("img/wP.png");
-	t3.loadFromFile("img/bP.png");
-	t4.loadFromFile("img/wB.png");
-	t5.loadFromFile("img/bB.png");
-	t6.loadFromFile("img/wN.png");
-	t7.loadFromFile("img/bN.png");
-	t8.loadFromFile("img/wR.png");
-	t9.loadFromFile("img/bR.png");
-	t10.loadFromFile("img/wQ.png");
-	t11.loadFromFile("img/bQ.png");
-	t12.loadFromFile("img/wK.png");
-	t13.loadFromFile("img/bK.png");
+	t1.loadFromFile("res/board.png");
+	t2.loadFromFile("res/wP.png");
+	t3.loadFromFile("res/bP.png");
+	t4.loadFromFile("res/wB.png");
+	t5.loadFromFile("res/bB.png");
+	t6.loadFromFile("res/wN.png");
+	t7.loadFromFile("res/bN.png");
+	t8.loadFromFile("res/wR.png");
+	t9.loadFromFile("res/bR.png");
+	t10.loadFromFile("res/wQ.png");
+	t11.loadFromFile("res/bQ.png");
+	t12.loadFromFile("res/wK.png");
+	t13.loadFromFile("res/bK.png");
 
 	Sprite board_img(t1);
 	Sprite wP(t2);
@@ -56,6 +58,14 @@ int main()
 
 	RectangleShape attackMove(Vector2f(100, 100));
 	attackMove.setFillColor(Color(181, 48, 48));
+
+	Font font;
+	if (!font.loadFromFile("res/arial.ttf")) {
+		cout << "NEMA FONT\a";
+	}
+
+	Text text;
+	text.setFont(font);
 
 	int clickX = 0;
 	int clickY = 0;
@@ -105,10 +115,24 @@ int main()
 
 				/*for (int i = 0; i < 8; i++) {
 					for (int j = 0; j < 8; j++) {
-						cout << board[i][j]->type << board[i][j]->white << "\t";
+						cout << w_moves[i][j]->type << w_moves[i][j]->white << "\t";
 					}
 					cout << "\n";
 				}*/
+			}
+		}
+
+		// CHECKMATE
+		if (checkMate) {
+			const char* whoWin = !whitePlay ? "Білі виграли! Хочете зіграти ще раз?" : "Чорні виграли! Хочете зіграти ще раз?";
+			int choice = MessageBoxA(NULL, whoWin, "Кінець гри", MB_YESNO);
+
+			if (choice == IDYES) {
+				generateBoard("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR");
+				checkMate = false;
+			}
+			else {
+				exit(0);
 			}
 		}
 
@@ -134,67 +158,81 @@ int main()
 		}
 
 		for (int i = 0; i < 8; i++) {
+			text.setPosition(Vector2f(1, 100 * i));
+			text.setString(to_string(8 - i));
+			text.setCharacterSize(15);
+			text.setFillColor(i % 2 == 0 ? Color(181, 136, 99) : Color(240, 217, 181));
+			text.setStyle(Text::Bold);
+
+			window.draw(text);
+
+			text.setPosition(Vector2f(100 - 12 + 100 * i, 700));
+			text.setString((char)('A' + i));
+			text.setCharacterSize(14);
+			text.setFillColor(i % 2 ? Color(181, 136, 99) : Color(240, 217, 181));
+			text.setStyle(Text::Bold);
+
+			window.draw(text);
+
 			for (int j = 0; j < 8; j++) {
-				if (board[i][j]->type != '0') {
-					if (board[i][j]->type == 'p') {
-						if (board[i][j]->white) {
-							wP.setPosition(j * 100, i * 100);
-							window.draw(wP);
-						}
-						else {
-							bP.setPosition(j * 100, i * 100);
-							window.draw(bP);
-						}
+				if (board[i][j]->type == 'p') {
+					if (board[i][j]->white) {
+						wP.setPosition(j * 100, i * 100);
+						window.draw(wP);
 					}
-					if (board[i][j]->type == 'n') {
-						if (board[i][j]->white) {
-							wN.setPosition(j * 100, i * 100);
-							window.draw(wN);
-						}
-						else {
-							bN.setPosition(j * 100, i * 100);
-							window.draw(bN);
-						}
+					else {
+						bP.setPosition(j * 100, i * 100);
+						window.draw(bP);
 					}
-					if (board[i][j]->type == 'b') {
-						if (board[i][j]->white) {
-							wB.setPosition(j * 100, i * 100);
-							window.draw(wB);
-						}
-						else {
-							bB.setPosition(j * 100, i * 100);
-							window.draw(bB);
-						}
+				}
+				if (board[i][j]->type == 'n') {
+					if (board[i][j]->white) {
+						wN.setPosition(j * 100, i * 100);
+						window.draw(wN);
 					}
-					if (board[i][j]->type == 'r') {
-						if (board[i][j]->white) {
-							wR.setPosition(j * 100, i * 100);
-							window.draw(wR);
-						}
-						else {
-							bR.setPosition(j * 100, i * 100);
-							window.draw(bR);
-						}
+					else {
+						bN.setPosition(j * 100, i * 100);
+						window.draw(bN);
 					}
-					if (board[i][j]->type == 'q') {
-						if (board[i][j]->white) {
-							wQ.setPosition(j * 100, i * 100);
-							window.draw(wQ);
-						}
-						else {
-							bQ.setPosition(j * 100, i * 100);
-							window.draw(bQ);
-						}
+				}
+				if (board[i][j]->type == 'b') {
+					if (board[i][j]->white) {
+						wB.setPosition(j * 100, i * 100);
+						window.draw(wB);
 					}
-					if (board[i][j]->type == 'k') {
-						if (board[i][j]->white) {
-							wK.setPosition(j * 100, i * 100);
-							window.draw(wK);
-						}
-						else {
-							bK.setPosition(j * 100, i * 100);
-							window.draw(bK);
-						}
+					else {
+						bB.setPosition(j * 100, i * 100);
+						window.draw(bB);
+					}
+				}
+				if (board[i][j]->type == 'r') {
+					if (board[i][j]->white) {
+						wR.setPosition(j * 100, i * 100);
+						window.draw(wR);
+					}
+					else {
+						bR.setPosition(j * 100, i * 100);
+						window.draw(bR);
+					}
+				}
+				if (board[i][j]->type == 'q') {
+					if (board[i][j]->white) {
+						wQ.setPosition(j * 100, i * 100);
+						window.draw(wQ);
+					}
+					else {
+						bQ.setPosition(j * 100, i * 100);
+						window.draw(bQ);
+					}
+				}
+				if (board[i][j]->type == 'k') {
+					if (board[i][j]->white) {
+						wK.setPosition(j * 100, i * 100);
+						window.draw(wK);
+					}
+					else {
+						bK.setPosition(j * 100, i * 100);
+						window.draw(bK);
 					}
 				}
 			}

@@ -33,18 +33,18 @@ public:
 		// King check verification
 		if (this->x - 1 >= 0) {
 			if (this->white) {
-				w_moves[this->y - 1 * k][this->x - 1] = board[this->y][this->x];
+				w_moves[this->y - 1 * k][this->x - 1] = this;
 			}
 			else {
-				b_moves[this->y - 1 * k][this->x - 1] = board[this->y][this->x];
+				b_moves[this->y - 1 * k][this->x - 1] = this;
 			}
 		}
 		if (this->x + 1 <= 7) {
 			if (this->white) {
-				w_moves[this->y - 1 * k][this->x + 1] = board[this->y][this->x];
+				w_moves[this->y - 1 * k][this->x + 1] = this;
 			}
 			else {
-				b_moves[this->y - 1 * k][this->x + 1] = board[this->y][this->x];
+				b_moves[this->y - 1 * k][this->x + 1] = this;
 			}
 		}
 		
@@ -58,5 +58,6 @@ public:
 		}
 
 		this->secureFromCheck();
+		this->preventFromCheck();
 	}
 };

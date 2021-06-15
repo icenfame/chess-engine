@@ -96,36 +96,44 @@ public:
 			cout << "BLACK KING CHECK: " << check << endl;
 		}
 
-		int checkMate = 0;
-
+		int piecesCanMove = 0;
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
 				if (board[i][j]->type != '0' && board[i][j]->white == this->white) {
 					if (board[i][j]->moves.size() > 0) {
-						checkMate++;
+						piecesCanMove++;
 					}
 				}
 			}
 		}
 
-		if (!checkMate) {
-			cout << "VSIO NAGRAUSI\n";
+		if (!piecesCanMove) {
+			checkMate = true;
 		}
 
 		// Castling
-		if (!this->moved && board[this->y][this->x + 3]->type == 'r' && !board[this->y][this->x + 3]->moved && !check && wb_moves[this->y][this->x + 1]->type == '0' && wb_moves[this->y][this->x + 2]->type == '0') {
-			if (board[this->y][this->x + 1]->type == '0' && board[this->y][this->x + 2]->type == '0') {
-				moves.push_back(Point{ this->x + 2, this->y });
+		if (this->x + 3 <= 7) {
+			if (!this->moved && board[this->y][this->x + 3]->type == 'r' && !board[this->y][this->x + 3]->moved && !check && wb_moves[this->y][this->x + 1]->type == '0' && wb_moves[this->y][this->x + 2]->type == '0') {
+				if (board[this->y][this->x + 1]->type == '0' && board[this->y][this->x + 2]->type == '0') {
+					moves.push_back(Point{ this->x + 2, this->y });
+				}
+			}
+		}
+		if (this->x - 4 >= 0) {
+			if (!this->moved && board[this->y][this->x - 4]->type == 'r' && !board[this->y][this->x - 4]->moved && !check && wb_moves[this->y][this->x - 1]->type == '0' && wb_moves[this->y][this->x - 2]->type == '0') {
+				if (board[this->y][this->x - 1]->type == '0' && board[this->y][this->x - 2]->type == '0' && board[this->y][this->x - 3]->type == '0') {
+					moves.push_back(Point{ this->x - 2, this->y });
+				}
 			}
 		}
 
-		if (!this->moved && board[this->y][this->x - 4]->type == 'r' && !board[this->y][this->x - 4]->moved && !check && wb_moves[this->y][this->x - 1]->type == '0' && wb_moves[this->y][this->x - 2]->type == '0') {
-			if (board[this->y][this->x - 1]->type == '0' && board[this->y][this->x - 2]->type == '0' && board[this->y][this->x - 3]->type == '0') {
-				moves.push_back(Point{ this->x - 2, this->y });
-			}
+		if (this->white) {
+			wKing = this;
 		}
-
-		//cout << w_moves[7][1]->type << "  " << w_moves[7][1]->white << endl;
+		else {
+			bKing = this;
+		}
+		
 	}
 
 	void customMove(Point to) {

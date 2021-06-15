@@ -16,6 +16,11 @@ bool whitePlay = true;
 bool wCheck = false;
 bool bCheck = false;
 
+bool checkMate = false;
+
+Piece* wKing;
+Piece* bKing;
+
 Piece* whoMakeCheck;
 Piece* whoUnderCheck;
 
@@ -104,6 +109,8 @@ public:
 			auto prevMoves = this->moves;
 			this->moves.clear();
 
+			cout << "Who make check: " << whoMakeCheck->type << endl;
+
 			for (int i = 0; i < prevMoves.size(); i++) {
 				Point startPoint = { whoUnderCheck->x, whoUnderCheck->y };
 
@@ -130,14 +137,14 @@ public:
 					num = abs(whoMakeCheck->y - whoUnderCheck->y);
 				}
 
-				for (int j = 1; j < num; j++) {
+				for (int j = 1; j <= num; j++) {
 					if (prevMoves[i].x == startPoint.x + (j * kx) && prevMoves[i].y == startPoint.y + (j * ky)) {
-						cout << "Start point: " << startPoint.x << "  " << startPoint.y << endl;
+						/*cout << "Start point: " << startPoint.x << "  " << startPoint.y << endl;
 						cout << "kx: " << kx << "  " << "ky: " << ky << endl;
 						cout << "num: " << num << endl;
 
 						cout << "moveX: " << prevMoves[i].x << endl;
-						cout << "moveY: " << prevMoves[i].y << endl;
+						cout << "moveY: " << prevMoves[i].y << endl;*/
 
 						this->moves.push_back(prevMoves[i]);
 					}
@@ -146,96 +153,59 @@ public:
 					}
 				}
 			}
-
-
-
-
-
-		//	for (int i = 0; i < prevMoves.size(); i++) {
-		//		if ((whoMakeCheck->y == whoUnderCheck->y && whoMakeCheck->y == prevMoves[i].y) || (whoMakeCheck->x == whoUnderCheck->x && whoMakeCheck->x == prevMoves[i].x)) {
-		//			if (wb_moves[prevMoves[i].y][prevMoves[i].x] == whoMakeCheck || board[prevMoves[i].y][prevMoves[i].x] == whoMakeCheck) {
-		//				Point startPoint = { whoUnderCheck->x, whoUnderCheck->y };
-
-		//				int kx = 0, ky = 0;
-
-		//				if (whoUnderCheck->x - whoMakeCheck->x < 0) {
-		//					kx = 1;
-		//				}
-		//				else if (whoUnderCheck->x - whoMakeCheck->x > 0) {
-		//					kx = -1;
-		//				}
-		//				if (whoUnderCheck->y - whoMakeCheck->y < 0) {
-		//					ky = 1;
-		//				}
-		//				else if (whoUnderCheck->y - whoMakeCheck->y > 0) {
-		//					ky = -1;
-		//				}
-
-		//				cout << "Start point: " << startPoint.x << "  " << startPoint.y << endl;
-		//				cout << "kx: " << kx << "  " << "ky: " << ky << endl;
-
-		//				int num;
-
-		//				if (whoMakeCheck->x - whoUnderCheck->x == 0) {
-		//					num = abs(whoMakeCheck->y - whoUnderCheck->y);
-		//				}
-		//				else {
-		//					num = abs(whoMakeCheck->x - whoUnderCheck->x);
-		//				}
-		//				
-		//				for (int j = 1; j < num; j++) {
-		//					if (prevMoves[i].x == startPoint.x + (j * kx) && prevMoves[i].y == startPoint.y + (j * ky)) {
-		//						this->moves.push_back(prevMoves[i]);
-		//					}
-		//				}
-		//			}
-		//		}
-		//		else if (abs(whoMakeCheck->x - whoUnderCheck->x) == abs(whoMakeCheck->y - whoUnderCheck->y)) {
-		//			if (board[prevMoves[i].y][prevMoves[i].x] == whoMakeCheck) {
-		//				this->moves.push_back(prevMoves[i]);
-		//			}
-		//			else {
-		//				Point startPoint = { whoUnderCheck->x, whoUnderCheck->y };
-
-		//				int kx = 0, ky = 0;
-
-		//				if (whoUnderCheck->x - whoMakeCheck->x < 0) {
-		//					kx = 1;
-		//				}
-		//				else {
-		//					kx = -1;
-		//				}
-		//				if (whoUnderCheck->y - whoMakeCheck->y < 0) {
-		//					ky = 1;
-		//				}
-		//				else {
-		//					ky = -1;
-		//				}
-
-		//				cout << "Start point: " << startPoint.x << "  " << startPoint.y << endl;
-		//				cout << "kx: " << kx << "  " << "ky: " << ky << endl;
-
-		//				for (int j = 1; j < abs(whoMakeCheck->x - whoUnderCheck->x); j++) {
-		//					/*cout << startPoint.x + (j * kx) << "|\t|" << startPoint.y + (j * ky) << endl;*/
-		//					if (prevMoves[i].x == startPoint.x + (j * kx) && prevMoves[i].y == startPoint.y + (j * ky)) {
-		//						this->moves.push_back(prevMoves[i]);
-		//					}
-		//				}
-		//			}
-		//		}
-		//		else if (whoMakeCheck->type == 'n' && whoMakeCheck == board[prevMoves[i].y][prevMoves[i].x]) {
-		//			this->moves.push_back(prevMoves[i]);
-		//		}
-		//	}
 		}
 	}
 
 	void preventFromCheck() {
-		bool check = this->white ? wCheck : bCheck;
+		auto king = this->white ? wKing : bKing;
 		auto wb_moves = this->white ? b_moves : w_moves;
 
-		if (wb_moves[this->y][this->x]->type != '0' && wb_moves[this->y][this->x]->type != 'n' && wb_moves[this->y][this->x]->type != 'p' && wb_moves[this->y][this->x]->type != 'k') {
+		auto prevMoves = this->moves;
 
+		if (wb_moves[this->y][this->x]->type != '0' && wb_moves[this->y][this->x]->type != 'n' && wb_moves[this->y][this->x]->type != 'p' && wb_moves[this->y][this->x]->type != 'k') {
+			for (int i = 0; i < prevMoves.size(); i++) {
+				Point startPoint = { king->x, king->y };
+
+				int kx = 0, ky = 0;
+
+				if (king->x - wb_moves[this->y][this->x]->x < 0) kx = 1;
+				if (king->x - wb_moves[this->y][this->x]->x > 0) kx = -1;
+
+				if (king->y - wb_moves[this->y][this->x]->y < 0) ky = 1;
+				if (king->y - wb_moves[this->y][this->x]->y > 0) ky = -1;
+
+				int num;
+
+				// XY
+				if (abs(wb_moves[this->y][this->x]->x - king->x) == abs(wb_moves[this->y][this->x]->y - king->y)) {
+					num = (abs(wb_moves[this->y][this->x]->x - king->x) + abs(wb_moves[this->y][this->x]->y - king->y)) / 2;
+				}
+				// X
+				else if (wb_moves[this->y][this->x]->x - king->x != 0) {
+					num = abs(wb_moves[this->y][this->x]->x - king->x);
+				}
+				// Y
+				else {
+					num = abs(wb_moves[this->y][this->x]->y - king->y);
+				}
+
+				int pieces = 0;
+				for (int j = 1; j <= num; j++) {
+					if (board[startPoint.y + (j * ky)][startPoint.x + (j * kx)]->type != '0') {
+						pieces++;
+
+						if (pieces >= 2) break;
+					}
+
+					if (board[startPoint.y + (j * ky)][startPoint.x + (j * kx)] == this) {
+						this->moves.clear();
+
+						if (prevMoves[i].x == startPoint.x + (j * kx) && prevMoves[i].y == startPoint.y + (j * ky)) {
+							this->moves.push_back(prevMoves[i]);
+						}
+					}
+				}
+			}
 		}
 	}
 };
