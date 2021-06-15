@@ -113,15 +113,17 @@ public:
 		}
 
 		// Castling
-		if (!this->moved && board[this->y][this->x + 3]->type == 'r' && !board[this->y][this->x + 3]->moved && !check && wb_moves[this->y][this->x + 1]->type == '0' && wb_moves[this->y][this->x + 2]->type == '0') {
-			if (board[this->y][this->x + 1]->type == '0' && board[this->y][this->x + 2]->type == '0') {
-				moves.push_back(Point{ this->x + 2, this->y });
+		if (this->x + 3 <= 7 && this->x - 4 >= 0) {
+			if (!this->moved && board[this->y][this->x + 3]->type == 'r' && !board[this->y][this->x + 3]->moved && !check && wb_moves[this->y][this->x + 1]->type == '0' && wb_moves[this->y][this->x + 2]->type == '0') {
+				if (board[this->y][this->x + 1]->type == '0' && board[this->y][this->x + 2]->type == '0') {
+					moves.push_back(Point{ this->x + 2, this->y });
+				}
 			}
-		}
 
-		if (!this->moved && board[this->y][this->x - 4]->type == 'r' && !board[this->y][this->x - 4]->moved && !check && wb_moves[this->y][this->x - 1]->type == '0' && wb_moves[this->y][this->x - 2]->type == '0') {
-			if (board[this->y][this->x - 1]->type == '0' && board[this->y][this->x - 2]->type == '0' && board[this->y][this->x - 3]->type == '0') {
-				moves.push_back(Point{ this->x - 2, this->y });
+			if (!this->moved && board[this->y][this->x - 4]->type == 'r' && !board[this->y][this->x - 4]->moved && !check && wb_moves[this->y][this->x - 1]->type == '0' && wb_moves[this->y][this->x - 2]->type == '0') {
+				if (board[this->y][this->x - 1]->type == '0' && board[this->y][this->x - 2]->type == '0' && board[this->y][this->x - 3]->type == '0') {
+					moves.push_back(Point{ this->x - 2, this->y });
+				}
 			}
 		}
 

@@ -93,5 +93,7 @@ public:
 				b_moves[moves[i].y][moves[i].x] = board[y][x];
 			}
 		}
+
+		this->secureFromCheck();
 	}
 };
