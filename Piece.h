@@ -109,9 +109,14 @@ public:
 			auto prevMoves = this->moves;
 			this->moves.clear();
 
-			if (whoMakeCheck->x == whoUnderCheck->x || whoMakeCheck->y == whoUnderCheck->y || abs(whoMakeCheck->x - whoUnderCheck->x) == abs(whoMakeCheck->y - whoUnderCheck->y)) {
-				//cout << "Who make check: " << this->x << " " << this->y << endl;
-
+			if (whoMakeCheck->type == 'n') {
+				for (int i = 0; i < prevMoves.size(); i++) {
+					if (prevMoves[i].x == whoMakeCheck->x && prevMoves[i].y == whoMakeCheck->y) {
+						this->moves.push_back(prevMoves[i]);
+					}
+				}
+			}
+			else if (whoMakeCheck->x == whoUnderCheck->x || whoMakeCheck->y == whoUnderCheck->y || abs(whoMakeCheck->x - whoUnderCheck->x) == abs(whoMakeCheck->y - whoUnderCheck->y)) {
 				for (int i = 0; i < prevMoves.size(); i++) {
 					Point startPoint = { whoUnderCheck->x, whoUnderCheck->y };
 
