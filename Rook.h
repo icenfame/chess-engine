@@ -85,15 +85,7 @@ public:
 			}
 		}
 
-		for (int i = 0; i < moves.size(); i++) {
-			if (this->white) {
-				w_moves[moves[i].y][moves[i].x] = this;
-			}
-			else {
-				b_moves[moves[i].y][moves[i].x] = this;
-			}
-		}
-
+		this->attackPriority();
 		this->secureFromCheck();
 		this->preventFromCheck();
 	}

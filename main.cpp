@@ -9,12 +9,12 @@ using namespace sf;
 
 #include "Piece.h"
 
-#include "King.h"
 #include "Queen.h"
 #include "Pawn.h"
 #include "Knight.h"
 #include "Bishop.h"
 #include "Rook.h"
+#include "King.h"
 
 #include "Board.h"
 
@@ -115,24 +115,10 @@ int main()
 
 				for (int i = 0; i < 8; i++) {
 					for (int j = 0; j < 8; j++) {
-						cout << w_moves[i][j]->type << w_moves[i][j]->white << "\t";
+						cout << b_moves[i][j]->type << b_moves[i][j]->white << "\t";
 					}
 					cout << "\n";
 				}
-			}
-		}
-
-		// CHECKMATE
-		if (checkMate) {
-			const char* whoWin = !whitePlay ? "Білі виграли! Хочете зіграти ще раз?" : "Чорні виграли! Хочете зіграти ще раз?";
-			int choice = MessageBoxA(NULL, whoWin, "Кінець гри", MB_YESNO);
-
-			if (choice == IDYES) {
-				generateBoard("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR");
-				checkMate = false;
-			}
-			else {
-				exit(0);
 			}
 		}
 
@@ -239,6 +225,20 @@ int main()
 		}
 
 		window.display();
+
+		// CHECKMATE
+		if (checkMate) {
+			const char* whoWin = !whitePlay ? "Білі виграли! Хочете зіграти ще раз?" : "Чорні виграли! Хочете зіграти ще раз?";
+			int choice = MessageBoxA(NULL, whoWin, "Кінець гри", MB_YESNO);
+
+			if (choice == IDYES) {
+				generateBoard("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR");
+				checkMate = false;
+			}
+			else {
+				exit(0);
+			}
+		}
 	}
 
 	return 0;

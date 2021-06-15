@@ -3,11 +3,11 @@ public:
 	Queen(int x, int y, bool white, char type) :Piece(x, y, white, type) {}
 
 	void generateMoves() {
-		moves.clear();
+		this->moves.clear();
 
 		for (int x = this->x, y = this->y; x < 7 && y < 7; x++, y++) {
 			if (board[y + 1][x + 1]->type == '0') {
-				moves.push_back(Point{ x + 1, y + 1 });
+				this->moves.push_back(Point{ x + 1, y + 1 });
 			}
 			else if (board[y + 1][x + 1]->white == this->white) {
 				if (this->white) {
@@ -20,14 +20,14 @@ public:
 				break;
 			}
 			else {
-				moves.push_back(Point{ x + 1, y + 1 });
+				this->moves.push_back(Point{ x + 1, y + 1 });
 				break;
 			}
 		}
 
 		for (int x = this->x, y = this->y; x > 0 && y > 0; x--, y--) {
 			if (board[y - 1][x - 1]->type == '0') {
-				moves.push_back(Point{ x - 1, y - 1 });
+				this->moves.push_back(Point{ x - 1, y - 1 });
 			}
 			else if (board[y - 1][x - 1]->white == this->white) {
 				if (this->white) {
@@ -40,14 +40,14 @@ public:
 				break;
 			}
 			else {
-				moves.push_back(Point{ x - 1, y - 1 });
+				this->moves.push_back(Point{ x - 1, y - 1 });
 				break;
 			}
 		}
 
 		for (int x = this->x, y = this->y; x > 0 && y < 7; x--, y++) {
 			if (board[y + 1][x - 1]->type == '0') {
-				moves.push_back(Point{ x - 1, y + 1 });
+				this->moves.push_back(Point{ x - 1, y + 1 });
 			}
 			else if (board[y + 1][x - 1]->white == this->white) {
 				if (this->white) {
@@ -60,14 +60,14 @@ public:
 				break;
 			}
 			else {
-				moves.push_back(Point{ x - 1, y + 1 });
+				this->moves.push_back(Point{ x - 1, y + 1 });
 				break;
 			}
 		}
 
 		for (int x = this->x, y = this->y; x < 7 && y > 0; x++, y--) {
 			if (board[y - 1][x + 1]->type == '0') {
-				moves.push_back(Point{ x + 1, y - 1 });
+				this->moves.push_back(Point{ x + 1, y - 1 });
 			}
 			else if (board[y - 1][x + 1]->white == this->white) {
 				if (this->white) {
@@ -80,14 +80,14 @@ public:
 				break;
 			}
 			else {
-				moves.push_back(Point{ x + 1, y - 1 });
+				this->moves.push_back(Point{ x + 1, y - 1 });
 				break;
 			}
 		}
 
 		for (int x = this->x; x < 7; x++) {
 			if (board[this->y][x + 1]->type == '0') {
-				moves.push_back(Point{ x + 1, this->y });
+				this->moves.push_back(Point{ x + 1, this->y });
 			}
 			else if (board[this->y][x + 1]->white == this->white) {
 				if (this->white) {
@@ -100,14 +100,14 @@ public:
 				break;
 			}
 			else {
-				moves.push_back(Point{ x + 1, this->y });
+				this->moves.push_back(Point{ x + 1, this->y });
 				break;
 			}
 		}
 
 		for (int x = this->x; x > 0; x--) {
 			if (board[this->y][x - 1]->type == '0') {
-				moves.push_back(Point{ x - 1, this->y });
+				this->moves.push_back(Point{ x - 1, this->y });
 			}
 			else if (board[this->y][x - 1]->white == this->white) {
 				if (this->white) {
@@ -120,14 +120,14 @@ public:
 				break;
 			}
 			else {
-				moves.push_back(Point{ x - 1, this->y });
+				this->moves.push_back(Point{ x - 1, this->y });
 				break;
 			}
 		}
 
 		for (int y = this->y; y < 7; y++) {
 			if (board[y + 1][this->x]->type == '0') {
-				moves.push_back(Point{ this->x, y + 1 });
+				this->moves.push_back(Point{ this->x, y + 1 });
 			}
 			else if (board[y + 1][this->x]->white == this->white) {
 				if (this->white) {
@@ -140,14 +140,14 @@ public:
 				break;
 			}
 			else {
-				moves.push_back(Point{ this->x, y + 1 });
+				this->moves.push_back(Point{ this->x, y + 1 });
 				break;
 			}
 		}
 
 		for (int y = this->y; y > 0; y--) {
 			if (board[y - 1][this->x]->type == '0') {
-				moves.push_back(Point{ this->x, y - 1 });
+				this->moves.push_back(Point{ this->x, y - 1 });
 			}
 			else if (board[y - 1][this->x]->white == this->white) {
 				if (this->white) {
@@ -160,31 +160,12 @@ public:
 				break;
 			}
 			else {
-				moves.push_back(Point{ this->x, y - 1 });
+				this->moves.push_back(Point{ this->x, y - 1 });
 				break;
 			}
 		}
-		auto king = this->white ? wKing : bKing;
 
-		for (int i = 0; i < moves.size(); i++) {
-			if (this->white) {
-				if (w_moves[moves[i].y][moves[i].x]->type == '0') {
-					w_moves[moves[i].y][moves[i].x] = this;
-				}
-				else if (this->x == king->x || this->y == king->y ) {
-					w_moves[moves[i].y][moves[i].x] = this;
-				}
-			}
-			else {
-				if (b_moves[moves[i].y][moves[i].x]->type == '0') {
-					b_moves[moves[i].y][moves[i].x] = this;
-				}
-				else if (this->x == king->x || this->y == king->y) {
-					b_moves[moves[i].y][moves[i].x] = this;
-				}
-			}
-		}
-
+		this->attackPriority();
 		this->secureFromCheck();
 		this->preventFromCheck();
 	}

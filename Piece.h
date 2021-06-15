@@ -164,7 +164,7 @@ public:
 
 
 		if (wb_moves[this->y][this->x]->type != '0' && wb_moves[this->y][this->x]->type != 'n' && wb_moves[this->y][this->x]->type != 'p' && wb_moves[this->y][this->x]->type != 'k') {
-			if (wb_moves[this->y][this->x]->y == king->y || wb_moves[this->y][this->x]->x == king->x || abs(wb_moves[this->y][this->x]->x - king->x) == abs(wb_moves[this->y][this->x]->y - king->y)) {
+			if (wb_moves[this->y][this->x]->x == king->x || wb_moves[this->y][this->x]->y == king->y || abs(wb_moves[this->y][this->x]->x - king->x) == abs(wb_moves[this->y][this->x]->y - king->y)) {
 					
 				Point startPoint = { king->x, king->y };
 
@@ -194,13 +194,9 @@ public:
 				int pieces = 0;
 
 				for (int j = 1; j <= num; j++) {
-
-					/**/cout << "Start point: " << startPoint.x << "  " << startPoint.y << endl;
+					/*cout << "Start point: " << startPoint.x << "  " << startPoint.y << endl;
 					cout << "kx: " << kx << "  " << "ky: " << ky << endl;
-					cout << "num: " << num << endl;
-
-					
-
+					cout << "num: " << num << endl;*/
 
 					if (board[startPoint.y + (j * ky)][startPoint.x + (j * kx)]->type != '0') {
 						pieces++;
@@ -211,8 +207,6 @@ public:
 					if (board[startPoint.y + (j * ky)][startPoint.x + (j * kx)] == this) {
 						this->moves.clear();
 
-						cout << "\n\nCLEARED\n\n" << endl;
-						cout << endl << this->type << endl;
 						for (int i = 0; i < prevMoves.size(); i++) {
 							for (int k = 1; k <= num; k++) {
 								if (prevMoves[i].x == startPoint.x + (k * kx) && prevMoves[i].y == startPoint.y + (k * ky)) {
@@ -220,8 +214,33 @@ public:
 								}
 							}
 						}
+
 						break;
 					}
+				}
+			}
+		}
+	}
+
+	void attackPriority() {
+		auto king = this->white ? wKing : bKing;
+		auto wb_moves = this->white ? b_moves : w_moves;
+
+		for (int i = 0; i < this->moves.size(); i++) {
+			if (wb_moves[this->moves[i].y][this->moves[i].x]->type == '0') {
+				if (this->white) {
+					w_moves[this->moves[i].y][this->moves[i].x] = this;
+				}
+				else {
+					b_moves[this->moves[i].y][this->moves[i].x] = this;
+				}
+			}
+			else if (this->x == king->x || this->y == king->y || abs(this->x - king->x) == abs(this->y - king->y)) {
+				if (this->white) {
+					w_moves[this->moves[i].y][this->moves[i].x] = this;
+				}
+				else {
+					b_moves[this->moves[i].y][this->moves[i].x] = this;
 				}
 			}
 		}

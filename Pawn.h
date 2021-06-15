@@ -38,7 +38,8 @@ public:
 				if (w_moves[this->y - 1 * k][this->x - 1]->type == '0') {
 					w_moves[this->y - 1 * k][this->x - 1] = this;
 				}
-				else if (king && (this->x == king->x || this->y == king->y)) {
+				// attack priority
+				else if (king && (this->x == king->x || this->y == king->y || abs(this->x - king->x) == abs(this->y - king->y))) {
 					w_moves[this->y - 1 * k][this->x - 1] = this;
 				}
 			}
@@ -46,7 +47,7 @@ public:
 				if (b_moves[this->y - 1 * k][this->x - 1]->type == '0') {
 					b_moves[this->y - 1 * k][this->x - 1] = this;
 				}
-				else if (king && (this->x == king->x || this->y == king->y)) {
+				else if (king && (this->x == king->x || this->y == king->y || abs(this->x - king->x) == abs(this->y - king->y))) {
 					b_moves[this->y - 1 * k][this->x - 1] = this;
 				}
 			}
@@ -56,7 +57,7 @@ public:
 				if (w_moves[this->y - 1 * k][this->x + 1]->type == '0') {
 					w_moves[this->y - 1 * k][this->x + 1] = this;
 				}
-				else if (king &&  (this->x == king->x || this->y == king->y)) {
+				else if (king && (this->x == king->x || this->y == king->y || abs(this->x - king->x) == abs(this->y - king->y))) {
 					w_moves[this->y - 1 * k][this->x + 1] = this;
 				}
 			}
@@ -64,7 +65,7 @@ public:
 				if (b_moves[this->y - 1 * k][this->x + 1]->type == '0') {
 					b_moves[this->y - 1 * k][this->x + 1] = this;
 				}
-				else if (king && (this->x == king->x || this->y == king->y)) {
+				else if (king && (this->x == king->x || this->y == king->y || abs(this->x - king->x) == abs(this->y - king->y))) {
 					b_moves[this->y - 1 * k][this->x + 1] = this;
 				}
 			}
