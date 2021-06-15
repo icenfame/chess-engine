@@ -21,10 +21,10 @@ public:
 			}
 			else {
 				if (this->white) {
-					w_moves[this->y - 2 * k][this->x + 1] = this;
+					w_moves[this->y - 2 * k][this->x + 1].push_back(this);
 				}
 				else {
-					b_moves[this->y - 2 * k][this->x + 1] = this;
+					b_moves[this->y - 2 * k][this->x + 1].push_back(this);
 				}
 			}
 		}
@@ -34,10 +34,10 @@ public:
 			}
 			else {
 				if (this->white) {
-					w_moves[this->y - 2 * k][this->x - 1] = this;
+					w_moves[this->y - 2 * k][this->x - 1].push_back(this);
 				}
 				else {
-					b_moves[this->y - 2 * k][this->x - 1] = this;
+					b_moves[this->y - 2 * k][this->x - 1].push_back(this);
 				}
 			}
 		}
@@ -48,10 +48,10 @@ public:
 			}
 			else {
 				if (this->white) {
-					w_moves[this->y + 2 * k][this->x + 1] = this;
+					w_moves[this->y + 2 * k][this->x + 1].push_back(this);
 				}
 				else {
-					b_moves[this->y + 2 * k][this->x + 1] = this;
+					b_moves[this->y + 2 * k][this->x + 1].push_back(this);
 				}
 			}
 		}
@@ -61,10 +61,10 @@ public:
 			}
 			else {
 				if (this->white) {
-					w_moves[this->y + 2 * k][this->x - 1] = this;
+					w_moves[this->y + 2 * k][this->x - 1].push_back(this);
 				}
 				else {
-					b_moves[this->y + 2 * k][this->x - 1] = this;
+					b_moves[this->y + 2 * k][this->x - 1].push_back(this);
 				}
 			}
 		}
@@ -76,9 +76,9 @@ public:
 			}
 			else {
 				if (this->white) {
-					w_moves[this->y - 1 * k][this->x + 2] = this;
+					w_moves[this->y - 1 * k][this->x + 2].push_back(this);
 				} else {
-					b_moves[this->y - 1 * k][this->x + 2] = this;
+					b_moves[this->y - 1 * k][this->x + 2].push_back(this);
 				}
 			}
 		}
@@ -88,9 +88,9 @@ public:
 			}
 			else {
 				if (this->white) {
-					w_moves[this->y - 1 * k][this->x - 2] = this;
+					w_moves[this->y - 1 * k][this->x - 2].push_back(this);
 				} else {
-					b_moves[this->y - 1 * k][this->x - 2] = this;
+					b_moves[this->y - 1 * k][this->x - 2].push_back(this);
 				}
 			}
 		}
@@ -101,9 +101,9 @@ public:
 			}
 			else {
 				if (this->white) {
-					w_moves[this->y + 1 * k][this->x + 2] = this;
+					w_moves[this->y + 1 * k][this->x + 2].push_back(this);
 				} else {
-					b_moves[this->y + 1 * k][this->x + 2] = this;
+					b_moves[this->y + 1 * k][this->x + 2].push_back(this);
 				}
 			}
 		}
@@ -113,19 +113,19 @@ public:
 			}
 			else {
 				if (this->white) {
-					w_moves[this->y + 1 * k][this->x - 2] = this;
+					w_moves[this->y + 1 * k][this->x - 2].push_back(this);
 				} else {
-					b_moves[this->y + 1 * k][this->x - 2] = this;
+					b_moves[this->y + 1 * k][this->x - 2].push_back(this);
 				}
 			}
 		}
 
 		for (int i = 0; i < moves.size(); i++) {
 			if (this->white) {
-				w_moves[moves[i].y][moves[i].x] = this;
+				w_moves[moves[i].y][moves[i].x].push_back(this);
 			}
 			else {
-				b_moves[moves[i].y][moves[i].x] = this;
+				b_moves[moves[i].y][moves[i].x].push_back(this);
 			}
 		}
 

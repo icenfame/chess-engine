@@ -115,7 +115,7 @@ int main()
 
 				/*for (int i = 0; i < 8; i++) {
 					for (int j = 0; j < 8; j++) {
-						cout << w_moves[i][j]->type << w_moves[i][j]->white << "\t";
+						cout << b_moves[i][j]->type << b_moves[i][j]->white << "\t";
 					}
 					cout << "\n";
 				}*/

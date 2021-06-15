@@ -8,8 +8,8 @@ void generateBoardMoves();
 
 Piece* board[8][8];
 
-Piece* w_moves[8][8];
-Piece* b_moves[8][8];
+vector<Piece*> w_moves[8][8];
+vector<Piece*> b_moves[8][8];
 
 bool whitePlay = true;
 
@@ -45,8 +45,11 @@ public:
 
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
-				w_moves[i][j] = new Piece('0');
-				b_moves[i][j] = new Piece('0');
+				w_moves[i][j].clear();
+				w_moves[i][j].push_back(new Piece('0'));
+
+				b_moves[i][j].clear();
+				b_moves[i][j].push_back(new Piece('0'));
 			}
 		}
 
@@ -189,6 +192,13 @@ public:
 					num = abs(wb_moves[this->y][this->x]->y - king->y);
 				}
 
+				cout << "Start point: " << startPoint.x << "  " << startPoint.y << endl;
+				cout << "kx: " << kx << "  " << "ky: " << ky << endl;
+				cout << "num: " << num << endl;
+
+				cout << "moveX: " << prevMoves[i].x << endl;
+				cout << "moveY: " << prevMoves[i].y << endl;
+
 				int pieces = 0;
 				for (int j = 1; j <= num; j++) {
 					if (board[startPoint.y + (j * ky)][startPoint.x + (j * kx)]->type != '0') {
@@ -199,6 +209,13 @@ public:
 
 					if (board[startPoint.y + (j * ky)][startPoint.x + (j * kx)] == this) {
 						this->moves.clear();
+
+						/*cout << "Start point: " << startPoint.x << "  " << startPoint.y << endl;
+						cout << "kx: " << kx << "  " << "ky: " << ky << endl;
+						cout << "num: " << num << endl;
+
+						cout << "moveX: " << prevMoves[i].x << endl;
+						cout << "moveY: " << prevMoves[i].y << endl;*/
 
 						if (prevMoves[i].x == startPoint.x + (j * kx) && prevMoves[i].y == startPoint.y + (j * ky)) {
 							this->moves.push_back(prevMoves[i]);

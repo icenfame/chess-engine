@@ -11,10 +11,10 @@ public:
 			}
 			else if (board[this->y][x + 1]->white == this->white) {
 				if (this->white) {
-					w_moves[this->y][x + 1] = this;
+					w_moves[this->y][x + 1].push_back(this);
 				}
 				else {
-					b_moves[this->y][x + 1] = this;
+					b_moves[this->y][x + 1].push_back(this);
 				}
 
 				break;
@@ -31,10 +31,10 @@ public:
 			}
 			else if (board[this->y][x - 1]->white == this->white) {
 				if (this->white) {
-					w_moves[this->y][x - 1] = this;
+					w_moves[this->y][x - 1].push_back(this);
 				}
 				else {
-					b_moves[this->y][x - 1] = this;
+					b_moves[this->y][x - 1].push_back(this);
 				}
 
 				break;
@@ -51,10 +51,10 @@ public:
 			}
 			else if (board[y + 1][this->x]->white == this->white) {
 				if (this->white) {
-					w_moves[y + 1][this->x] = this;
+					w_moves[y + 1][this->x].push_back(this);
 				}
 				else {
-					b_moves[y + 1][this->x] = this;
+					b_moves[y + 1][this->x].push_back(this);
 				}
 
 				break;
@@ -71,10 +71,10 @@ public:
 			}
 			else if (board[y - 1][this->x]->white == this->white) {
 				if (this->white) {
-					w_moves[y - 1][this->x] = this;
+					w_moves[y - 1][this->x].push_back(this);
 				}
 				else {
-					b_moves[y - 1][this->x] = this;
+					b_moves[y - 1][this->x].push_back(this);
 				}
 
 				break;
@@ -87,10 +87,10 @@ public:
 
 		for (int i = 0; i < moves.size(); i++) {
 			if (this->white) {
-				w_moves[moves[i].y][moves[i].x] = this;
+				w_moves[moves[i].y][moves[i].x].push_back(this);
 			}
 			else {
-				b_moves[moves[i].y][moves[i].x] = this;
+				b_moves[moves[i].y][moves[i].x].push_back(this);
 			}
 		}
 
