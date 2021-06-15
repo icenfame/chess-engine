@@ -49,15 +49,9 @@ public:
 		}
 
 
-		for (int i = 0; i < moves.size(); i++) {
-			if (this->white) {
-				w_moves[moves[i].y][moves[i].x] = board[this->y][this->x];
-			}
-			else {
-				b_moves[moves[i].y][moves[i].x] = board[this->y][this->x];
-			}
-		}
+		this->attackPriority();
 
+		// Escape check
 		auto prevMoves = moves;
 		moves.clear();
 
@@ -74,28 +68,23 @@ public:
 			}
 		}
 
-		bool check = this->white ? wCheck : bCheck;
+		// If check
+		int check = this->white ? wCheck : bCheck;
 		auto wb_moves = this->white ? b_moves : w_moves;
 
-		if (wb_moves[this->y][this->x]->type != '0') {
-			if (this->white) wCheck = true;
-			else bCheck = true;
+		/*if (wb_moves[this->y][this->x]->type != '0') {
+			if (this->white) wCheck++;
+			else bCheck++;
 
 			whoMakeCheck = wb_moves[this->y][this->x];
 			whoUnderCheck = this;
 		}
 		else {
-			if (this->white) wCheck = false;
-			else bCheck = false;
-		}
+			if (this->white) wCheck = 0;
+			else bCheck = 0;
+		}*/
 
-		if (this->white) {
-			cout << "WHITE KING CHECK: " << check << endl;
-		}
-		else {
-			cout << "BLACK KING CHECK: " << check << endl;
-		}
-
+		// Checkmate
 		int piecesCanMove = 0;
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
@@ -106,11 +95,10 @@ public:
 				}
 			}
 		}
-
 		if (!piecesCanMove) {
 			checkMate = true;
 		}
-
+		
 		// Castling
 		if (this->x + 3 <= 7) {
 			if (!this->moved && board[this->y][this->x + 3]->type == 'r' && !board[this->y][this->x + 3]->moved && !check && wb_moves[this->y][this->x + 1]->type == '0' && wb_moves[this->y][this->x + 2]->type == '0') {
@@ -127,6 +115,7 @@ public:
 			}
 		}
 
+		// Initialize king
 		if (this->white) {
 			wKing = this;
 		}
