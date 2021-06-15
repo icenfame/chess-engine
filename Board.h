@@ -8,6 +8,19 @@ void generateBoardMoves() {
 			board[i][j]->generateMoves();
 		}
 	}
+
+	for (int i = 0; i < 8; i++) {
+		for (int j = 0; j < 8; j++) {
+			if (board[i][j]->type == 'k') {
+				board[i][j]->generateMoves();
+			}
+			else {
+				board[i][j]->attackPriority();
+				board[i][j]->secureFromCheck();
+				board[i][j]->preventFromCheck();
+			}
+		}
+	}
 }
 
 void generateBoard(string fen) {

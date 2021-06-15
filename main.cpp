@@ -96,14 +96,12 @@ int main()
 
 				clicked = true;
 
-				//board[clickY][clickX]->generateMoves();
-
 				if (board[prevY][prevX]->type != '0') {
 					board[prevY][prevX]->move(Point{ clickX, clickY });
 					//generateBoardMoves();
 				}
 
-				bool check = whitePlay ? wCheck : bCheck;
+				int check = whitePlay ? wCheck : bCheck;
 
 				if (board[clickY][clickX]->white == whitePlay && check) {
 					if (board[clickY][clickX]->type == 'k') {

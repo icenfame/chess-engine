@@ -83,21 +83,6 @@ public:
 			if (this->white) wCheck = 0;
 			else bCheck = 0;
 		}*/
-
-		// Checkmate
-		int piecesCanMove = 0;
-		for (int i = 0; i < 8; i++) {
-			for (int j = 0; j < 8; j++) {
-				if (board[i][j]->type != '0' && board[i][j]->white == this->white) {
-					if (board[i][j]->moves.size() > 0) {
-						piecesCanMove++;
-					}
-				}
-			}
-		}
-		if (!piecesCanMove) {
-			checkMate = true;
-		}
 		
 		// Castling
 		if (this->x + 3 <= 7) {
@@ -121,6 +106,25 @@ public:
 		}
 		else {
 			bKing = this;
+		}
+
+		// Checkmate
+		if (check) {
+			int piecesCanMove = 0;
+			for (int i = 0; i < 8; i++) {
+				for (int j = 0; j < 8; j++) {
+					if (board[i][j]->type != '0' && board[i][j]->white == this->white) {
+						if (board[i][j]->moves.size() > 0) {
+							piecesCanMove++;
+						}
+					}
+				}
+			}
+			if (!piecesCanMove) {
+				checkMate = true;
+			}
+
+			cout << "CHECKMATE: " << checkMate << "\n\n";
 		}
 	}
 
@@ -147,7 +151,7 @@ public:
 	}
 
 	void ifCheck() {
-		bool check = this->white ? wCheck : bCheck;
+		int check = this->white ? wCheck : bCheck;
 		auto prevMove = Point{ this->x, this->y };
 
 		for (int i = 0; i < this->moves.size(); i++) {

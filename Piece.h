@@ -102,14 +102,14 @@ public:
 	}
 
 	void secureFromCheck() {
-		bool check = this->white ? wCheck : bCheck;
+		int check = this->white ? wCheck : bCheck;
 		auto wb_moves = this->white ? b_moves : w_moves;
 
 		if (check) {
 			auto prevMoves = this->moves;
 			this->moves.clear();
 
-			//cout << "Who make check: " << whoMakeCheck->type << endl;
+			cout << "Who make check: " << this->x << " " << this->y << endl;
 
 			for (int i = 0; i < prevMoves.size(); i++) {
 				Point startPoint = { whoUnderCheck->x, whoUnderCheck->y };
@@ -162,10 +162,8 @@ public:
 
 		auto prevMoves = this->moves;
 
-
 		if (wb_moves[this->y][this->x]->type != '0' && wb_moves[this->y][this->x]->type != 'n' && wb_moves[this->y][this->x]->type != 'p' && wb_moves[this->y][this->x]->type != 'k') {
 			if (wb_moves[this->y][this->x]->x == king->x || wb_moves[this->y][this->x]->y == king->y || abs(wb_moves[this->y][this->x]->x - king->x) == abs(wb_moves[this->y][this->x]->y - king->y)) {
-					
 				Point startPoint = { king->x, king->y };
 
 				int kx = 0, ky = 0;
@@ -266,6 +264,7 @@ public:
 
 		if (check >= 2) {
 			this->moves.clear();
+			//king->generateMoves();
 		}
 	}
 };
