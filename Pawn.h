@@ -17,6 +17,7 @@ public:
 		// Pawn to queen
 		if (this->white && this->y == 0 || !this->white && this->y == 7) {
 			board[this->y][this->x] = new Queen(this->x, this->y, this->white, 'q');
+			generateBoardMoves();
 		}
 
 		if (this->y - 1 < 0 || this->y + 1 > 7) {
