@@ -112,6 +112,23 @@ public:
 
 			cout << "CHECKMATE: " << checkMate << "\n\n";
 		}
+		else {
+			int piecesCanMove = 0;
+			for (int i = 0; i < 8; i++) {
+				for (int j = 0; j < 8; j++) {
+					if (board[i][j]->type != '0' && board[i][j]->white == this->white) {
+						if (board[i][j]->moves.size() > 0) {
+							piecesCanMove++;
+						}
+					}
+				}
+			}
+			if (!piecesCanMove) {
+				pat = true;
+			}
+
+			cout << "PAT: " << pat << "\n\n";
+		}
 	}
 
 	void customMove(Point to) {

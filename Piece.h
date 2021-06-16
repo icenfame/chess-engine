@@ -17,6 +17,7 @@ int wCheck = 0;
 int bCheck = 0;
 
 bool checkMate = false;
+bool pat = false;
 
 Piece* wKing;
 Piece* bKing;
@@ -262,6 +263,8 @@ public:
 
 				whoMakeCheck = this;
 				whoUnderCheck = king;
+
+				king->ifCheck();
 			}
 		}
 

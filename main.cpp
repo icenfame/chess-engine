@@ -73,6 +73,9 @@ int main()
 	bool clicked = false;
 
 	generateBoard("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR");
+
+	// Test FEN's
+
 	//generateBoard("4r2k/b7/8/4r3/6N1/3q4/8/2B1K3");
 	//generateBoard("7k/b7/8/8/8/3q4/8/4K1r1");
 
@@ -98,15 +101,6 @@ int main()
 
 				if (board[prevY][prevX]->type != '0') {
 					board[prevY][prevX]->move(Point{ clickX, clickY });
-					//generateBoardMoves();
-				}
-
-				int check = whitePlay ? wCheck : bCheck;
-
-				if (board[clickY][clickX]->white == whitePlay && check) {
-					if (board[clickY][clickX]->type == 'k') {
-						board[clickY][clickX]->ifCheck();
-					}
 				}
 			}
 		}
@@ -216,15 +210,29 @@ int main()
 		window.display();
 
 		// CHECKMATE
-		if (checkMate) {
-			const char* whoWin = !whitePlay ? "Білі виграли! Хочете зіграти ще раз?" : "Чорні виграли! Хочете зіграти ще раз?";
-			int choice = MessageBoxA(NULL, whoWin, "Кінець гри", MB_YESNO);
+		if (checkMate || pat) {
+			string whoWin;
+
+			if (checkMate) {
+				whoWin = !whitePlay ? "Білі виграли! Хочете зіграти ще раз?" : "Чорні виграли! Хочете зіграти ще раз?";
+			}
+			else if (pat) {
+				whoWin = "Нічия! Хочете зіграти ще раз?";
+			}
+			
+			int choice = MessageBoxA(NULL, whoWin.c_str(), "Кінець гри", MB_YESNO);
 
 			if (choice == IDYES) {
 				generateBoard("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR");
+
 				checkMate = false;
+				pat = false;
+
 				wCheck = 0;
 				bCheck = 0;
+
+				whitePlay = true;
+				clicked = false;
 			}
 			else {
 				exit(0);
