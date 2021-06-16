@@ -102,6 +102,10 @@ int main()
 				if (board[prevY][prevX]->type != '0') {
 					board[prevY][prevX]->move(Point{ clickX, clickY });
 				}
+
+				if (board[clickY][clickX]->type == 'k') {
+					board[clickY][clickX]->ifCheck();
+				}
 			}
 		}
 

@@ -129,6 +129,8 @@ public:
 
 			cout << "PAT: " << pat << "\n\n";
 		}
+
+		//this->ifCheck();
 	}
 
 	void customMove(Point to) {

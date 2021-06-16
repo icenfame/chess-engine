@@ -13,6 +13,7 @@ void generateBoardMoves() {
 		for (int j = 0; j < 8; j++) {
 			if (board[i][j]->type == 'k') {
 				board[i][j]->generateMoves();
+				//board[i][j]->ifCheck();
 			}
 			else {
 				board[i][j]->secureFromCheck();

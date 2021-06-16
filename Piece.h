@@ -264,7 +264,7 @@ public:
 				whoMakeCheck = this;
 				whoUnderCheck = king;
 
-				king->ifCheck();
+				//king->ifCheck();
 			}
 		}
 
