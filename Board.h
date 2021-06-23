@@ -13,13 +13,32 @@ void generateBoardMoves() {
 		for (int j = 0; j < 8; j++) {
 			if (board[i][j]->type == 'k') {
 				board[i][j]->generateMoves();
-				//board[i][j]->ifCheck();
 			}
 			else {
 				board[i][j]->secureFromCheck();
 				board[i][j]->preventFromCheck();
 			}
 		}
+	}
+
+	int check = whitePlay ? wCheck : bCheck;
+
+	if (!check) {
+		int piecesCanMove = 0;
+		for (int i = 0; i < 8; i++) {
+			for (int j = 0; j < 8; j++) {
+				if (board[i][j]->type != '0' && board[i][j]->white != whitePlay) {
+					if (board[i][j]->moves.size() > 0) {
+						piecesCanMove++;
+					}
+				}
+			}
+		}
+		if (!piecesCanMove) {
+			pat = true;
+		}
+
+		cout << "PAT: " << pat << "\n\n";
 	}
 }
 
